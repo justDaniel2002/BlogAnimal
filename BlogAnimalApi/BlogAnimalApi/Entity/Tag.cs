@@ -7,12 +7,12 @@ namespace BlogAnimalApi.Entity
     {
         public Tag()
         {
-            Blogs = new HashSet<Blog>();
+            BlogTags = new HashSet<BlogTag>();
         }
 
         public int TagId { get; set; }
         public string TagName { get; set; } = null!;
 
-        public virtual ICollection<Blog> Blogs { get; set; }
+        public virtual ICollection<BlogTag> BlogTags { get; set; }
     }
 }

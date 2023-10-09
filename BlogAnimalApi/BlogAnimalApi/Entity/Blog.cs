@@ -8,7 +8,7 @@ namespace BlogAnimalApi.Entity
         public Blog()
         {
             BlogComments = new HashSet<BlogComment>();
-            Tags = new HashSet<Tag>();
+            BlogTags = new HashSet<BlogTag>();
         }
 
         public string BlogId { get; set; } = null!;
@@ -21,7 +21,6 @@ namespace BlogAnimalApi.Entity
         public virtual Account? Account { get; set; }
         public virtual PetType? Type { get; set; }
         public virtual ICollection<BlogComment> BlogComments { get; set; }
-
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<BlogTag> BlogTags { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace BlogAnimalApi.Entity
         public virtual DbSet<Account> Accounts { get; set; } = null!;
         public virtual DbSet<Blog> Blogs { get; set; } = null!;
         public virtual DbSet<BlogComment> BlogComments { get; set; } = null!;
+        public virtual DbSet<BlogTag> BlogTags { get; set; } = null!;
         public virtual DbSet<PetType> PetTypes { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<PostComment> PostComments { get; set; } = null!;
@@ -31,7 +32,7 @@ namespace BlogAnimalApi.Entity
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server =(local); database = BlogAnimal;uid=sa;pwd=123;TrustServerCertificate=true");
+                optionsBuilder.UseSqlServer("server =localhost; database = BlogAnimal;uid=sa;pwd=123;TrustServerCertificate=true");
             }
         }
 
@@ -41,7 +42,7 @@ namespace BlogAnimalApi.Entity
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Email, "UQ__Account__AB6E6164BFD42C66")
+                entity.HasIndex(e => e.Email, "UQ__Account__AB6E616466BE87EA")
                     .IsUnique();
 
                 entity.Property(e => e.AccountId)
@@ -64,6 +65,10 @@ namespace BlogAnimalApi.Entity
                     .HasMaxLength(225)
                     .IsUnicode(false)
                     .HasColumnName("facebook");
+
+                entity.Property(e => e.HashPassword)
+                    .IsUnicode(false)
+                    .HasColumnName("hash_password");
 
                 entity.Property(e => e.IsBanned)
                     .HasColumnName("isBanned")
@@ -123,7 +128,7 @@ namespace BlogAnimalApi.Entity
             modelBuilder.Entity<BlogComment>(entity =>
             {
                 entity.HasKey(e => e.CommentId)
-                    .HasName("PK__BlogComm__E7957687EDABF2BE");
+                    .HasName("PK__BlogComm__E79576877BDF8D37");
 
                 entity.ToTable("BlogComment");
 
@@ -157,10 +162,34 @@ namespace BlogAnimalApi.Entity
                     .HasConstraintName("FK__BlogComme__blog___5BE2A6F2");
             });
 
+            modelBuilder.Entity<BlogTag>(entity =>
+            {
+                entity.ToTable("BlogTag");
+
+                entity.Property(e => e.BlogTagId).HasColumnName("blog_tag_id");
+
+                entity.Property(e => e.BlogId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("blog_id");
+
+                entity.Property(e => e.TagId).HasColumnName("tag_id");
+
+                entity.HasOne(d => d.Blog)
+                    .WithMany(p => p.BlogTags)
+                    .HasForeignKey(d => d.BlogId)
+                    .HasConstraintName("FK__BlogTag__blog_id__59063A47");
+
+                entity.HasOne(d => d.Tag)
+                    .WithMany(p => p.BlogTags)
+                    .HasForeignKey(d => d.TagId)
+                    .HasConstraintName("FK__BlogTag__tag_id__5812160E");
+            });
+
             modelBuilder.Entity<PetType>(entity =>
             {
                 entity.HasKey(e => e.TypeId)
-                    .HasName("PK__PetType__2C0005988091321E");
+                    .HasName("PK__PetType__2C00059879454FF1");
 
                 entity.ToTable("PetType");
 
@@ -218,7 +247,7 @@ namespace BlogAnimalApi.Entity
             modelBuilder.Entity<PostComment>(entity =>
             {
                 entity.HasKey(e => e.CommentId)
-                    .HasName("PK__PostComm__E7957687CABF62D5");
+                    .HasName("PK__PostComm__E79576879A716837");
 
                 entity.ToTable("PostComment");
 
@@ -255,7 +284,7 @@ namespace BlogAnimalApi.Entity
             modelBuilder.Entity<PostLike>(entity =>
             {
                 entity.HasKey(e => e.LikeId)
-                    .HasName("PK__PostLike__992C7930AC99D899");
+                    .HasName("PK__PostLike__992C7930F8047785");
 
                 entity.ToTable("PostLike");
 
@@ -307,23 +336,6 @@ namespace BlogAnimalApi.Entity
                 entity.Property(e => e.TagName)
                     .HasMaxLength(100)
                     .HasColumnName("tag_name");
-
-                entity.HasMany(d => d.Blogs)
-                    .WithMany(p => p.Tags)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "BlogTag",
-                        l => l.HasOne<Blog>().WithMany().HasForeignKey("BlogId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__BlogTag__blog_id__59063A47"),
-                        r => r.HasOne<Tag>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__BlogTag__tag_id__5812160E"),
-                        j =>
-                        {
-                            j.HasKey("TagId", "BlogId").HasName("PK__BlogTag__D001F8143188005C");
-
-                            j.ToTable("BlogTag");
-
-                            j.IndexerProperty<int>("TagId").HasColumnName("tag_id");
-
-                            j.IndexerProperty<string>("BlogId").HasMaxLength(100).IsUnicode(false).HasColumnName("blog_id");
-                        });
             });
 
             OnModelCreatingPartial(modelBuilder);

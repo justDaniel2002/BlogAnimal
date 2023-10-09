@@ -16,6 +16,7 @@ namespace BlogAnimalApi.Entity
 
         public string AccountId { get; set; } = null!;
         public string Username { get; set; } = null!;
+        public string? HashPassword { get; set; }
         public string Email { get; set; } = null!;
         public string? Contact { get; set; }
         public string? Facebook { get; set; }
