@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BlogAnimalApi.DTO;
 using BlogAnimalApi.Entity;
 
 namespace BlogAnimalApi.Helper
@@ -7,6 +8,15 @@ namespace BlogAnimalApi.Helper
     {
         public AutoMapperProfiles()
         {
+            CreateMap<Role, RoleDTO>().ReverseMap();
+            CreateMap<Tag, TagDTO>().ReverseMap();
+            CreateMap<Account, AccountDTO>().ReverseMap();
+            CreateMap<PetType, PetTypeDTO>().ReverseMap();
+            CreateMap<BlogComment, BlogCommentDTO>().ReverseMap();
+            CreateMap<Blog, BlogDTO>().ReverseMap();
+            CreateMap<PostComment, PostCommentDTO>().ReverseMap();
+            CreateMap<PostLike, PostLikeDTO>().ReverseMap();
+            CreateMap<Post, PostDTO>().ReverseMap();
         }
     }
 }

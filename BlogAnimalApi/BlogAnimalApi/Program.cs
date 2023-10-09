@@ -1,4 +1,5 @@
 using BlogAnimalApi.Entity;
+using BlogAnimalApi.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //add dbcontext
 builder.Services.AddDbContext<BlogAnimalContext>();
+//add repo
+builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<BlogRepository>();
+builder.Services.AddScoped<BlogComment>();
+builder.Services.AddScoped<BlogRepository>();
+builder.Services.AddScoped<BlogTagRepository>();
+builder.Services.AddScoped<PetTypeRepository>();
+builder.Services.AddScoped<PostCommentRepository>();
+builder.Services.AddScoped<PostLikeRepository>();
+builder.Services.AddScoped<PostRepository>();
+builder.Services.AddScoped<RoleRepository>();
+builder.Services.AddScoped<TagRepository>();
 //Add auto mapper
 builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
