@@ -1,5 +1,7 @@
 using BlogAnimalApi.Entity;
+using BlogAnimalApi.Helper;
 using BlogAnimalApi.Repository;
+using BlogAnimalApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +25,14 @@ builder.Services.AddScoped<PostLikeRepository>();
 builder.Services.AddScoped<PostRepository>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<TagRepository>();
+//add services
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<BlogService>();
+builder.Services.AddScoped<PostService>();
 //Add auto mapper
 builder.Services.AddAutoMapper(typeof(Program));
+//Add util
+builder.Services.AddScoped<Util>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
