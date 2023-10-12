@@ -20,6 +20,7 @@ builder.Services.AddScoped<BlogComment>();
 builder.Services.AddScoped<BlogRepository>();
 builder.Services.AddScoped<BlogTagRepository>();
 builder.Services.AddScoped<PetTypeRepository>();
+builder.Services.AddScoped<BlogTypeRepository>();
 builder.Services.AddScoped<PostCommentRepository>();
 builder.Services.AddScoped<PostLikeRepository>();
 builder.Services.AddScoped<PostRepository>();

@@ -2,6 +2,7 @@
 using BlogAnimalApi.DTO;
 using BlogAnimalApi.Entity;
 using BlogAnimalApi.Repository;
+using System.Numerics;
 
 namespace BlogAnimalApi.Services
 {
@@ -27,10 +28,12 @@ namespace BlogAnimalApi.Services
                 List<Tag> tags = new List<Tag>();
                 foreach(BlogTag bt in b.BlogTags)
                 {
-                    if (bt.Tag!=null)
-                    {
-                        tags.Add(bt.Tag);
-                    }
+
+                    int tag_id = Convert.ToInt32(bt.TagId);
+                    Tag tag = await tagRepo.getOne(tag_id);
+                    if (tag != null)
+                        tags.Add(tag);
+
                 }
 
                 //if list of tag > 0, update tagDTO list of blogDTO list

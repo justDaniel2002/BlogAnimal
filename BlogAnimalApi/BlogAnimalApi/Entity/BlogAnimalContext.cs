@@ -20,6 +20,7 @@ namespace BlogAnimalApi.Entity
         public virtual DbSet<Blog> Blogs { get; set; } = null!;
         public virtual DbSet<BlogComment> BlogComments { get; set; } = null!;
         public virtual DbSet<BlogTag> BlogTags { get; set; } = null!;
+        public virtual DbSet<BlogType> BlogTypes { get; set; } = null!;
         public virtual DbSet<PetType> PetTypes { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<PostComment> PostComments { get; set; } = null!;
@@ -101,6 +102,8 @@ namespace BlogAnimalApi.Entity
                     .IsUnicode(false)
                     .HasColumnName("account_id");
 
+                entity.Property(e => e.BlogTypeId).HasColumnName("blog_type_id");
+
                 entity.Property(e => e.Content).HasColumnName("content");
 
                 entity.Property(e => e.CreatedDate)
@@ -108,20 +111,25 @@ namespace BlogAnimalApi.Entity
                     .HasColumnName("createdDate")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.PetTypeId).HasColumnName("pet_type_id");
+
                 entity.Property(e => e.Title)
                     .HasMaxLength(225)
                     .HasColumnName("title");
-
-                entity.Property(e => e.TypeId).HasColumnName("type_id");
 
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Blogs)
                     .HasForeignKey(d => d.AccountId)
                     .HasConstraintName("FK__Blog__account_id__534D60F1");
 
-                entity.HasOne(d => d.Type)
+                entity.HasOne(d => d.BlogType)
                     .WithMany(p => p.Blogs)
-                    .HasForeignKey(d => d.TypeId)
+                    .HasForeignKey(d => d.BlogTypeId)
+                    .HasConstraintName("FK_Blog_BlogType");
+
+                entity.HasOne(d => d.PetType)
+                    .WithMany(p => p.Blogs)
+                    .HasForeignKey(d => d.PetTypeId)
                     .HasConstraintName("FK__Blog__type_id__5441852A");
             });
 
@@ -184,6 +192,23 @@ namespace BlogAnimalApi.Entity
                     .WithMany(p => p.BlogTags)
                     .HasForeignKey(d => d.TagId)
                     .HasConstraintName("FK__BlogTag__tag_id__5812160E");
+            });
+
+            modelBuilder.Entity<BlogType>(entity =>
+            {
+                entity.HasKey(e => e.TypeId);
+
+                entity.ToTable("BlogType");
+
+                entity.Property(e => e.TypeId).HasColumnName("type_id");
+
+                entity.Property(e => e.Image)
+                    .IsUnicode(false)
+                    .HasColumnName("image");
+
+                entity.Property(e => e.TypeName)
+                    .HasMaxLength(50)
+                    .HasColumnName("type_name");
             });
 
             modelBuilder.Entity<PetType>(entity =>
