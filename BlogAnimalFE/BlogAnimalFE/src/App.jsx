@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { lazy, Suspense } from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromChildren,
+  Route,
+  RouterProvider
+} from "react-router-dom";
+import PageLayout from "./layouts/PageLayout";
+import PostList from "./pages/Posts/PostList";
+import postListLoader from "./pages/Posts/PostListLoader";
+import "./App.css"
+import PostListPage from "./pages/Posts/page";
+
+const LazyPostList = lazy(() => import('./pages/Posts/PostList'))
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const router = createBrowserRouter(
+    createRoutesFromChildren(
+      <Route errorElement={<h1>Error</h1>}>
+        <Route path="/" element={<PageLayout />}>
+          <Route index element={<Suspense fallback={<h1 className="text-white">Loading...</h1>}><LazyPostList /></Suspense>}/>
+          {/* <Route index element={<PostList />}/> */}
+        </Route>
+      </Route>
+    ),
+    { basename: "" }
+  );
+  return <>
+  <RouterProvider router={router} fallbackElement={<h1>Loading...</h1>}/>
+  </>;
 }
 
-export default App
+export default App;
