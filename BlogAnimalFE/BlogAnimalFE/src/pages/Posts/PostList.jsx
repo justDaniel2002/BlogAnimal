@@ -1,5 +1,4 @@
-import { lazy, useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import SendIcon from '@mui/icons-material/Send';
@@ -8,9 +7,12 @@ import api from "../../api/api";
 const PostList = () => {
   //const posts = useLoaderData();
   const [posts, setPosts] = useState([])
-  useEffect(async () => {
-    const getPosts = await api.getAllPost()
-    setPosts(getPosts)
+  useEffect( () => {
+    const CallBack = async() =>{
+      const getPosts = await api.getAllPost()
+      setPosts(getPosts)
+  }
+  CallBack()
   },[])
   return (
     <>

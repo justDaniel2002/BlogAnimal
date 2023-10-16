@@ -21,10 +21,26 @@ namespace BlogAnimalApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getBlogByType/{typeid}")]
+        public async Task<IActionResult> getAllBlogByType(int typeid)
+        {
+            var result = await blogService.getAllBlogByType(typeid);
+            return Ok(result);
+        }
+
+        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> getBlogById(string id)
         {
             var result = await blogService.getOne(id);
+            return Ok(result);
+        }
+
+        [HttpGet("getBlogType")]
+        public async Task<IActionResult> getAllBlogType()
+        {
+            var result = await blogService.getAllBlogType();
             return Ok(result);
         }
     }

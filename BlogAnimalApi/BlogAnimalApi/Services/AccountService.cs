@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlogAnimalApi.DTO;
+using BlogAnimalApi.DTO.requestDTO;
 using BlogAnimalApi.Entity;
 using BlogAnimalApi.Helper;
 using BlogAnimalApi.Repository;
@@ -23,8 +24,9 @@ namespace BlogAnimalApi.Services
             return accountDTO;
         }
 
-        public async Task SignUp(Account account)
+        public async Task SignUp(SignUpDTO accountDTO)
         {
+            Account account = mapper.Map<Account>(accountDTO);
             await accountRepo.add(account);
         }
     }

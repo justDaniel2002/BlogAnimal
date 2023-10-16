@@ -1,5 +1,7 @@
-﻿using BlogAnimalApi.DTO.requestDTO;
+﻿using BlogAnimalApi.DTO;
+using BlogAnimalApi.DTO.requestDTO;
 using BlogAnimalApi.Entity;
+using BlogAnimalApi.Helper;
 using BlogAnimalApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +13,11 @@ namespace BlogAnimalApi.Controllers
     public class AuthenController : ControllerBase
     {
         private readonly AccountService accountService;
-        public AuthenController(AccountService accountService)
+        private readonly Util util;
+        public AuthenController(AccountService accountService, Util util)
         {
             this.accountService = accountService;
+            this.util = util;
         }
 
         [HttpPost("SignIn")]
@@ -25,11 +29,12 @@ namespace BlogAnimalApi.Controllers
         }
 
         [HttpPost("SignUp")]
-        public async Task<IActionResult> SignUp(Account account)
+        public async Task<IActionResult> SignUp(SignUpDTO account)
         {
             try
             {
-               await accountService.SignUp(account);
+                account.HashPassword = util.hashPassword(account.HashPassword);
+                await accountService.SignUp(account);
                 return StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception ex)

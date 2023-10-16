@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlogAnimalApi.DTO;
+using BlogAnimalApi.DTO.requestDTO;
 using BlogAnimalApi.Entity;
 
 namespace BlogAnimalApi.Helper
@@ -18,6 +19,9 @@ namespace BlogAnimalApi.Helper
             CreateMap<PostComment, PostCommentDTO>().ReverseMap();
             CreateMap<PostLike, PostLikeDTO>().ReverseMap();
             CreateMap<Post, PostDTO>().ReverseMap();
+            //
+            CreateMap<Account, SignInDTO>().ReverseMap();
+            CreateMap<Account, SignUpDTO>().ReverseMap();
         }
     }
 }
