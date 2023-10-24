@@ -39,16 +39,18 @@ namespace Repository
             }
         }
 
-        public async Task update(T entity)
+        public async Task<T> update(T entity)
         {
             context.Entry(entity).State = EntityState.Modified;
             await context.SaveChangesAsync();
+            return entity;
         }
 
-        public async Task add(T entity)
+        public async Task<T> add(T entity)
         {
             await dbSet.AddAsync(entity);
             await context.SaveChangesAsync();
+            return entity;
         }
     }
 }

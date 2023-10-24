@@ -19,5 +19,16 @@ namespace BlogAnimalApi.Repository
         {
             return await context.Posts.Include(p => p.PostLikes).Include(p => p.PostComments).Include(p => p.Account).FirstOrDefaultAsync(p => p.PostId.Equals(id));
         }
+
+        public async Task<Post> uploadImageString(string images, string id)
+        {
+            Post post = await context.Posts.FindAsync(id);
+            if (post!= null)
+            {
+                post.Images = images;
+                await context.SaveChangesAsync();
+            }
+            return post;
+        }
     }
 }

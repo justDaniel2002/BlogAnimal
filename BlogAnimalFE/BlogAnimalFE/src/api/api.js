@@ -30,6 +30,12 @@ const getAllBlogByType = async (typeid) => {
   return res.data;
 }
 
-const api = {getAllPost, getAllBlog, getAllBlogType, getAllBlogByType, getBlogById}
+const createPost = async (data) => {
+  const res = await axios.post(`https://localhost:7252/api/Post`, data).catch((err) => console.log(err));
+  console.log(res)
+  return res.data;
+}
+
+const api = {getAllPost, getAllBlog, getAllBlogType, getAllBlogByType, getBlogById, createPost}
 
 export default api

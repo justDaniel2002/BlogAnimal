@@ -2,6 +2,7 @@ using BlogAnimalApi.Entity;
 using BlogAnimalApi.Helper;
 using BlogAnimalApi.Repository;
 using BlogAnimalApi.Services;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,16 @@ builder.Services.AddScoped<PostService>();
 builder.Services.AddAutoMapper(typeof(Program));
 //Add util
 builder.Services.AddScoped<Util>();
+
+// Configure the maximum request size for file uploads (if needed)
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueCountLimit = int.MaxValue;
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartBodyLengthLimit = long.MaxValue;
+});
+//cloudonary config
+builder.Services.AddScoped<CloudinaryConfig>();
 
 //Add Cors
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

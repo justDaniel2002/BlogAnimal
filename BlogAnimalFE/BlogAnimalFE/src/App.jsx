@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import PageLayout from "./layouts/PageLayout";
 import "./App.css";
+import "react-quill/dist/quill.snow.css";
 import BlogTypeList from "./pages/Blogs/BlogTypeList";
 import PostList from "./pages/Posts/PostList";
 import BlogDetail from "./pages/Blogs/BlogDetail/BlogDetail";
