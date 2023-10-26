@@ -22,11 +22,15 @@ namespace BlogAnimalApi.Repository
 
         public async Task<Post> uploadImageString(string images, string id)
         {
-            Post post = await context.Posts.FindAsync(id);
+            Post post = await context.Posts.FirstOrDefaultAsync(p => p.PostId.Equals(id));
             if (post!= null)
             {
                 post.Images = images;
                 await context.SaveChangesAsync();
+            }
+            else
+            {
+                Console.WriteLine(post);
             }
             return post;
         }

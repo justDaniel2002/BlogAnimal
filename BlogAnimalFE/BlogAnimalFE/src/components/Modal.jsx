@@ -11,7 +11,7 @@ import { accountAtom } from "../atom/accountAtom";
 import { toast } from "react-toastify";
 import { postListAction } from "../pages/Posts/PostListAction";
 
-export const CreatePostModal = () => {
+export const CreatePostModal = ({handleClose}) => {
   const account = useRecoilValue(accountAtom);
   const [title, setTitle] = useState("");
   const [files, setFiles] = useState([]);
@@ -29,13 +29,13 @@ export const CreatePostModal = () => {
     if (
       title.length === 0 ||
       content.length === 0 ||
-      files.length == 0 ||
-      setFiles.length == 0
+      files.length == 0
     ) {
       toast("Values are empty", { type: toast.TYPE.WARNING });
     } else {
       const result = await postListAction(title, files, content, account.accountId);
       console.log(result);
+      handleClose();
     }
   };
 

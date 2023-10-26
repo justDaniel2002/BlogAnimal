@@ -79,3 +79,5 @@ D:\VSCode project\ReactJS+.Net\BlogAnimal\BlogAnimal\BlogAnimalApi\BlogAnimalApi
 D:\VSCode project\ReactJS+.Net\BlogAnimal\BlogAnimal\BlogAnimalApi\BlogAnimalApi\obj\Debug\net6.0\ref\BlogAnimalApi.dll
 D:\VSCode project\ReactJS+.Net\BlogAnimal\BlogAnimal\BlogAnimalApi\BlogAnimalApi\bin\Debug\net6.0\AutoMapper.dll
 D:\VSCode project\ReactJS+.Net\BlogAnimal\BlogAnimal\BlogAnimalApi\BlogAnimalApi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\VSCode project\ReactJS+.Net\BlogAnimal\BlogAnimal\BlogAnimalApi\BlogAnimalApi\bin\Debug\net6.0\CloudinaryDotNet.dll
+D:\VSCode project\ReactJS+.Net\BlogAnimal\BlogAnimal\BlogAnimalApi\BlogAnimalApi\bin\Debug\net6.0\Newtonsoft.Json.dll

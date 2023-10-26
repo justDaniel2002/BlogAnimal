@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { createPostmodalStyle } from "../../style/style";
 import { CreatePostModal } from "../../components/Modal";
+import { PhotoArrageImgUrl } from "../../components/PhotoArrage";
 
 const PostList = () => {
   //const posts = useLoaderData();
@@ -16,7 +17,11 @@ const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = async () => {
+    setOpen(false);
+    const getPosts = await api.getAllPost();
+    setPosts(getPosts);
+  };
   useEffect(() => {
     const CallBack = async () => {
       const getPosts = await api.getAllPost();
@@ -43,7 +48,7 @@ const PostList = () => {
           <>
             <div
               key={post.postId}
-              className="rounded-xl w-5/12 m-auto bg-neutral-800"
+              className="rounded-xl w-5/12 m-auto bg-neutral-800 mb-20"
             >
               <div className="pt-3 mx-5">
                 <div className="font-medium">{post?.account?.username}</div>
@@ -51,11 +56,14 @@ const PostList = () => {
                   {post?.createdDate}
                 </div>
               </div>
-              <div className="my-5 mx-5 pl-2">{post?.content}</div>
+              <div
+                className="my-5 mx-5 pl-2"
+                dangerouslySetInnerHTML={{ __html: post?.content }}
+              ></div>
 
               {post?.images ? (
                 <div className="my-5 mx-5 pl-2">
-                  <img src={post?.images} />
+                  <PhotoArrageImgUrl urls={post?.images?.split(',')}/>
                 </div>
               ) : (
                 ""
@@ -86,7 +94,7 @@ const PostList = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={createPostmodalStyle}>
-          <CreatePostModal />
+          <CreatePostModal handleClose={handleClose} />
         </Box>
       </Modal>
     </>

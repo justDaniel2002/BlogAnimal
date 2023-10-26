@@ -1,4 +1,5 @@
 ﻿using BlogAnimalApi.DTO.requestDTO;
+using BlogAnimalApi.Entity;
 using BlogAnimalApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,8 +35,8 @@ namespace BlogAnimalApi.Controllers
         {
             try
             {
-                await postService.CreatePost(cPostDTO);
-                return StatusCode(StatusCodes.Status201Created);
+                Post post = await postService.CreatePost(cPostDTO);
+                return Ok(post);
             }catch (Exception ex)
             {
                 return Ok(ex.Message);
@@ -43,11 +44,12 @@ namespace BlogAnimalApi.Controllers
         }
 
         [HttpPost("uploadImg/{id}")]
-        public async Task<IActionResult> uploadImagePost(List<IFormFile> files, string id)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> uploadImagePost(List<IFormFile> Images, string id)
         {
             try
             {
-                /*await postService.CreatePost(cPostDTO);*/
+                await postService.uploadImg(Request.Form.Files, id);
                 return StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception ex)

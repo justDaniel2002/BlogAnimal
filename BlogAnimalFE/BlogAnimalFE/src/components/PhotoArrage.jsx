@@ -38,3 +38,45 @@ export const PhotoArrage = ({ base64Image }) => {
     );
   }
 };
+
+export const PhotoArrageImgUrl = ({ urls }) => {
+  const popElement = urls.pop()
+  if (urls.length == 1) {
+    return <img src={urls[0]} className="w-full" />;
+  } else if (urls.length == 2) {
+    return (
+      <div className="flex">
+        <img src={urls[0]} className="w-1/2" />
+        <img src={urls[1]} className="w-1/2" />
+      </div>
+    );
+  } else if (urls.length == 3) {
+    return (
+      <div className="flex items-center">
+        <div className="w-1/2">
+          <img src={urls[0]} className="w-full" />
+        </div>
+        <div className="w-1/2">
+          <img src={urls[1]} className="w-auto h-1/2" />
+          <img src={urls[2]} className="w-auto h-1/2" />
+        </div>
+      </div>
+    );
+  } else if (urls.length > 3) {
+    return (
+      <div className="flex items-center">
+        <div className="w-1/2">
+          <img src={urls[0]} className="w-full" />
+        </div>
+        <div className="w-1/2">
+          <img src={urls[1]} className="w-auto h-1/2" />
+          <div className="w-auto h-1/2 text-center text-white bg-neutral-800 py-20">
+            {/* <img src={base64Image[2]} className="w-auto h-1/2" /> */}
+            +{base64Image.length-2}
+          </div>
+        </div>
+      </div>
+    );
+  }
+};
+

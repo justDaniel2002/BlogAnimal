@@ -7,6 +7,8 @@ using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
 using BlogAnimalApi.Helper;
 using System.Net;
+using System.Collections;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BlogAnimalApi.Services
 {
@@ -36,13 +38,13 @@ namespace BlogAnimalApi.Services
             return postDTO;
         }
 
-        public async Task CreatePost(CreatePostDTO createPostDTO)
+        public async Task<Post> CreatePost(CreatePostDTO createPostDTO)
         {
             Post post = mapper.Map<Post>(createPostDTO);
-            await postRepo.add(post);
+            return await postRepo.add(post);
         }
 
-        public async Task uploadImg(List<IFormFile> files, string postId)
+        public async Task uploadImg(IFormFileCollection files, string postId)
         {
             string images = "";
             foreach (var file in files)
@@ -50,8 +52,8 @@ namespace BlogAnimalApi.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, file.OpenReadStream()),
-                    PublicId = "olympic_flag", // Provide a unique public ID for each file
-                    Folder = "your-folder-name" // Replace "your-folder-name" with the desired folder name
+                    PublicId = "post_img"+Guid.NewGuid(), // Provide a unique public ID for each file
+                    Folder = "PostImages" // Replace "your-folder-name" with the desired folder name
                 };
 
                 var uploadResult = cloudinaryConfig.cloudinary.Upload(uploadParams);
@@ -61,9 +63,47 @@ namespace BlogAnimalApi.Services
                     // The file was uploaded successfully
                     images += uploadResult.SecureUri.AbsoluteUri+",";
                     // You can store or use the publicUrl as needed
+                    await postRepo.uploadImageString(images, postId);
+                }
+                else
+                {
+                    Console.WriteLine(uploadResult.Error);
                 }
             }
-            postRepo.uploadImageString(images, postId);
+           
+        }
+
+        public async Task uploadImgByte(List<byte[]> Images, string postId)
+        {
+            string images = "";
+            foreach (var fileData in Images)
+            {
+                // Generate a unique name for each file (e.g., using a GUID)
+                string uniqueFileName = Guid.NewGuid().ToString();
+
+                // Convert the byte array to a stream
+                using (Stream stream = new MemoryStream(fileData))
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(uniqueFileName, stream), // Use the unique name for the file
+                    };
+
+                    var uploadResult = cloudinaryConfig.cloudinary.Upload(uploadParams);
+
+                    // Handle the upload result for each file
+                    if (uploadResult.StatusCode == HttpStatusCode.OK)
+                    {
+                        images += uploadResult.SecureUri.AbsoluteUri + ",";
+                        // You can store or use the publicUrl as needed
+                        await postRepo.uploadImageString(images, postId);
+                    }
+                    else
+                    {
+                        // Handle the upload failure for this file
+                    }
+                }
+            }
         }
 
     }
