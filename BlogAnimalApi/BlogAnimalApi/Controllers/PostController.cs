@@ -57,5 +57,33 @@ namespace BlogAnimalApi.Controllers
                 return Ok(ex.Message);
             }
         }
+
+        [HttpPost("uploadComment/{postId}/{accId}")]
+        public async Task<IActionResult> uploadComment(string comment, string postId, string accId)
+        {
+            try
+            {
+                await postService.uploadComment(comment, postId, accId);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+        }
+
+        [HttpPost("likePost/{postId}/{accId}")]
+        public async Task<IActionResult> likePost(string postId, string accId)
+        {
+            try
+            {
+                await postService.likePost(postId, accId);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+        }
     }
 }

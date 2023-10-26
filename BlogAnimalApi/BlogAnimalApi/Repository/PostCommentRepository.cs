@@ -8,5 +8,6 @@ namespace BlogAnimalApi.Repository
         public PostCommentRepository(BlogAnimalContext _context) : base(_context)
         {
         }
+
     }
 }

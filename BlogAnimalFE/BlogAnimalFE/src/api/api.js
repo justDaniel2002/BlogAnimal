@@ -53,6 +53,20 @@ const uploadPostImage = async (Images, id) => {
   return res.data;
 }
 
-const api = {getAllPost, getAllBlog, getAllBlogType, getAllBlogByType, getBlogById, createPost, uploadPostImage}
+const uploadComment = async (comment, postId, accId) => {
+  const res = await axios.post(`https://localhost:7252/api/Post/uploadComment/${postId}/${accId}`, {comment})
+  .catch((err) => console.log(err));
+  console.log(res)
+  return res.data;
+}
+
+const likePost = async ( postId, accId) => {
+  const res = await axios.post(`https://localhost:7252/api/Post/likePost/${postId}/${accId}`)
+  .catch((err) => console.log(err));
+  console.log(res)
+  return res.data;
+}
+
+const api = {getAllPost, getAllBlog, getAllBlogType, getAllBlogByType, getBlogById, createPost, uploadPostImage, uploadComment, likePost}
 
 export default api

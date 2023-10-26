@@ -16,10 +16,15 @@ namespace BlogAnimalApi.Services
     {
         private readonly PostRepository postRepo;
         private readonly CloudinaryConfig cloudinaryConfig;
-        public PostService(PostRepository _postRepository, CloudinaryConfig cloudinaryConfig, IMapper _mapper) : base(_mapper)
+        private readonly PostCommentRepository postCommentRepo;
+        private readonly PostLikeRepository postLikeRepo;
+        public PostService(PostRepository _postRepository, CloudinaryConfig cloudinaryConfig, PostCommentRepository postCommentRepository,
+            PostLikeRepository postLikeRepo, IMapper _mapper) : base(_mapper)
         {
             this.postRepo = _postRepository;
             this.cloudinaryConfig = cloudinaryConfig;
+            this.postCommentRepo = postCommentRepository;
+            this.postLikeRepo = postLikeRepo;
         }
 
         public async Task<List<PostDTO>> getAll()
@@ -104,6 +109,25 @@ namespace BlogAnimalApi.Services
                     }
                 }
             }
+        }
+
+        public async Task<PostComment> uploadComment(string comment, string postId, string accId)
+        {
+            return await postCommentRepo.add(new PostComment
+            {
+                Content = comment,
+                PostId = postId,
+                AccountId = accId
+            });
+        }
+
+        public async Task<PostLike> likePost(string postId, string accId)
+        {
+            return await postLikeRepo.add(new PostLike
+            {
+                PostId = postId,
+                AccountId = accId
+            });
         }
 
     }
