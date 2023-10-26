@@ -113,12 +113,21 @@ namespace BlogAnimalApi.Services
 
         public async Task<PostComment> uploadComment(string comment, string postId, string accId)
         {
-            return await postCommentRepo.add(new PostComment
+            try
             {
-                Content = comment,
-                PostId = postId,
-                AccountId = accId
-            });
+                PostComment pm = await postCommentRepo.add(new PostComment
+                {
+                    Content = comment,
+                    PostId = postId,
+                    AccountId = accId
+                });
+                return pm;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
         }
 
         public async Task<PostLike> likePost(string postId, string accId)

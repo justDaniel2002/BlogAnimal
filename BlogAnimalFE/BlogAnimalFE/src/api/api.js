@@ -54,7 +54,7 @@ const uploadPostImage = async (Images, id) => {
 }
 
 const uploadComment = async (comment, postId, accId) => {
-  const res = await axios.post(`https://localhost:7252/api/Post/uploadComment/${postId}/${accId}`, {comment})
+  const res = await axios.post(`https://localhost:7252/api/Post/uploadComment/${postId}/${accId}?comment=${comment}`)
   .catch((err) => console.log(err));
   console.log(res)
   return res.data;

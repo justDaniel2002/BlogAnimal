@@ -20,7 +20,7 @@ const PostList = () => {
   const [open, setOpen] = useState(false);
   const [openCM, setOpenCM] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleOpenCM = () => openCM(true);
+  const handleOpenCM = () => setOpenCM(true);
 
   useEffect(() => {
     const CallBack = async () => {
@@ -84,7 +84,7 @@ const PostList = () => {
               <div className="bg-neutral-700 h-1 w-full" />
               <div className="flex justify-between text-neutral-400 mx-10 py-5">
                 <div onClick={() => likePost(post.postId)}>
-                  <ThumbUpOffAltIcon /> Thích {post.postComments.length>0?post.postComments.length:""}
+                  <ThumbUpOffAltIcon /> Thích {post.postLikes.length>0?post.postComments.length:""}
                 </div>
                 <div>
                   <ChatBubbleOutlineIcon
@@ -117,7 +117,7 @@ const PostList = () => {
       </Modal>
 
       <Modal
-        open={open}
+        open={openCM}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
