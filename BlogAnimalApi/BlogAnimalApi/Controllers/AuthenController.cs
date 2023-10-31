@@ -23,9 +23,20 @@ namespace BlogAnimalApi.Controllers
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignIn(SignInDTO dto)
         {
-            var result = await accountService.SignIn(dto.Email, dto.Password);
+            try
+            {
+                var result = await accountService.SignIn(dto.Email, dto.Password);
 
-            return Ok(result);
+                if (result == null)
+                {
+                    return Ok("Unauthenticated"); ;
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex);
+            }
         }
 
         [HttpPost("SignUp")]

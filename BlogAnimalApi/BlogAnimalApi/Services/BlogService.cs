@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlogAnimalApi.DTO;
+using BlogAnimalApi.DTO.requestDTO;
 using BlogAnimalApi.Entity;
 using BlogAnimalApi.Repository;
 using System.Numerics;
@@ -102,6 +103,29 @@ namespace BlogAnimalApi.Services
             List<BlogDTO> blogDTOs = await convertBlogToDto(blogs);
 
             return blogDTOs;
+        }
+
+        public async Task<BlogDTO> deleteBlogById(string blogId)
+        {
+            Blog blog = await blogRepo.delOne(blogId);
+            BlogDTO blogDTO = mapper.Map<BlogDTO>(blog);
+            return blogDTO;
+        }
+
+        public async Task<BlogDTO> editBlog(createBlogDTO editBlogDTO)
+        {
+            Blog editBlog = mapper.Map<Blog>(editBlogDTO);
+            Blog blog = await blogRepo.update(editBlog);
+            BlogDTO blogDTO = mapper.Map<BlogDTO>(blog);
+            return blogDTO;
+        }
+
+        public async Task<BlogDTO> createBlog(createBlogDTO createBlogDTO)
+        {
+            Blog createBlog = mapper.Map<Blog>(createBlogDTO);
+            Blog blog = await blogRepo.add(createBlog);
+            BlogDTO blogDTO = mapper.Map<BlogDTO>(blog);
+            return blogDTO;
         }
 
 

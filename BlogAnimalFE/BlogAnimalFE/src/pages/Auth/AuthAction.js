@@ -12,7 +12,7 @@ const AuthAction = async ({ params, request }) => {
                 password: formData.get('password'),
             }
             console.log("dataSignIn",dataSignIn);
-            return authApi.signIn(dataSignIn)
+            return await authApi.signIn(dataSignIn)
         case 'signUp':
             const dataSignUp = {
                 email: formData.get('email'),
@@ -20,7 +20,7 @@ const AuthAction = async ({ params, request }) => {
                 username: formData.get('username'),
             }
             console.log("dataSignUp",dataSignUp);
-            return authApi.signUp(dataSignUp)
+            return await authApi.signUp(dataSignUp)
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using BlogAnimalApi.Services;
+﻿using BlogAnimalApi.DTO.requestDTO;
+using BlogAnimalApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +29,7 @@ namespace BlogAnimalApi.Controllers
             return Ok(result);
         }
 
-        
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> getBlogById(string id)
@@ -42,6 +43,48 @@ namespace BlogAnimalApi.Controllers
         {
             var result = await blogService.getAllBlogType();
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> deleteBlogById(string id)
+        {
+            try
+            {
+                var result = await blogService.deleteBlogById(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> editBlog(createBlogDTO editBlog)
+        {
+            try
+            {
+                var result = await blogService.editBlog(editBlog);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> createBlog(createBlogDTO editBlog)
+        {
+            try
+            {
+                var result = await blogService.createBlog(editBlog);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex);
+            }
         }
     }
 }

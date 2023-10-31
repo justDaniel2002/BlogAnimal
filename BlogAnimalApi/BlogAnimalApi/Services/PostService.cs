@@ -130,13 +130,21 @@ namespace BlogAnimalApi.Services
             return null;
         }
 
-        public async Task<PostLike> likePost(string postId, string accId)
+        public async Task likePost(string postId, string accId)
         {
-            return await postLikeRepo.add(new PostLike
+            PostLike postLike = await postLikeRepo.getPostLikeByAccAndPost(postId, accId);
+            if(postLike != null)
             {
-                PostId = postId,
-                AccountId = accId
-            });
+                await postLikeRepo.delOne(postLike.LikeId);
+            }
+            else
+            {
+                await postLikeRepo.add(new PostLike
+                {
+                    PostId = postId,
+                    AccountId = accId
+                });
+            }
         }
 
     }

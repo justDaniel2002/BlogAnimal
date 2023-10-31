@@ -19,15 +19,38 @@ namespace BlogAnimalApi.Services
         public async Task<AccountDTO> SignIn(string email, string password)
         {
             Account acc = await accountRepo.getByEmailAndPass(email, password);
-            AccountDTO accountDTO = mapper.Map<AccountDTO>(acc);
+            if (acc != null)
+            {
+                AccountDTO accountDTO = mapper.Map<AccountDTO>(acc);
 
-            return accountDTO;
+                bool isBanned = accountDTO.IsBanned ?? false;
+                return isBanned ? null : accountDTO;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
         public async Task SignUp(SignUpDTO accountDTO)
         {
             Account account = mapper.Map<Account>(accountDTO);
             await accountRepo.add(account);
+        }
+
+        public async Task<List<AccountDTO>> getAll()
+        {
+            List<Account> accounts = await accountRepo.getAll();
+            List<AccountDTO> accountDTOs = mapper.Map<List<AccountDTO>>(accounts);
+            return accountDTOs;
+        }
+
+        public async Task banAccount(string accountId)
+        {
+            Account acc = await accountRepo.getOne(accountId);
+            acc.IsBanned = !acc.IsBanned;
+            await accountRepo.update(acc);
         }
     }
 }

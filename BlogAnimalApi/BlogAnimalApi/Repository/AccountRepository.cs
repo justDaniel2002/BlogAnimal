@@ -20,5 +20,15 @@ namespace BlogAnimalApi.Repository
             return await context.Accounts.FirstOrDefaultAsync(a => a.Email.Equals(email) && a.HashPassword.Equals(hashPass));
         }
 
+        public async Task<List<Account>> getAll()
+        {
+            return await context.Accounts.Include(a => a.Role).ToListAsync();
+        }
+
+        public async Task<Account> getOne(string accountId)
+        {
+            return await context.Accounts.FindAsync(accountId);
+        }
+
     }
 }

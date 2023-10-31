@@ -24,5 +24,17 @@ namespace BlogAnimalApi.Repository
         {
             return await context.Blogs.Include(b => b.Account).Include(b => b.BlogType).Include(b => b.PetType).Include(b => b.BlogComments).Include(b => b.BlogTags).Where(b => b.BlogTypeId == typeid).ToListAsync();
         }
+
+        public async Task<Blog> delOne(string id)
+        {
+            Blog blog = await context.Blogs.Include(b => b.BlogComments).FirstOrDefaultAsync(b => b.BlogId.Equals(id));
+            if(blog != null)
+            {
+                context.Blogs.Remove(blog);
+                await context.SaveChangesAsync();
+            }
+            return blog;
+
+        }
     }
 }

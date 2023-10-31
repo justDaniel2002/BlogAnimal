@@ -67,6 +67,42 @@ const likePost = async ( postId, accId) => {
   return res.data;
 }
 
-const api = {getAllPost, getAllBlog, getAllBlogType, getAllBlogByType, getBlogById, createPost, uploadPostImage, uploadComment, likePost}
+const getAllAccounts = async () => {
+  const res = await axios.get(`https://localhost:7252/api/Account/getAllAccount`)
+  .catch((err) => console.log(err));
+  console.log(res)
+  return res.data;
+}
+
+const banAccount = async (accountId) => {
+  const res = await axios.post(`https://localhost:7252/api/Account/banAccount/${accountId}`)
+  .catch((err) => console.log(err));
+  console.log(res)
+  return res.data;
+}
+
+const createBlog = async (data) => {
+  const res = await axios.post(`https://localhost:7252/api/Blog`,data)
+  .catch((err) => console.log(err));
+  console.log(res)
+  return res.data;
+}
+
+const editBlog = async (data) => {
+  const res = await axios.put(`https://localhost:7252/api/Blog`,data)
+  .catch((err) => console.log(err));
+  console.log(res)
+  return res.data;
+}
+
+const deleteBlog = async (blogId) => {
+  const res = await axios.delete(`https://localhost:7252/api/Blog/${blogId}`)
+  .catch((err) => console.log(err));
+  console.log(res)
+  return res.data;
+}
+
+const api = {getAllPost, getAllBlog, getAllBlogType, getAllBlogByType, getBlogById, createPost, 
+  uploadPostImage, uploadComment, likePost, getAllAccounts, banAccount, createBlog, editBlog, deleteBlog}
 
 export default api

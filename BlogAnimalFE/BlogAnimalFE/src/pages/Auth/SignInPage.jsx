@@ -7,6 +7,7 @@ import SignUpModal from "./SignUpPage";
 import { useRecoilState } from "recoil";
 import { accountAtom } from "../../atom/accountAtom";
 import { signUpmodalStyle } from "../../style/style";
+import { toast } from "react-toastify";
 
 
 const SignInPage = () => {
@@ -23,9 +24,11 @@ const SignInPage = () => {
     if(actionData?.email){
         setAccount(actionData)
         navigate("/")
+    } else if(actionData=="Unauthenticated"){
+      toast("Unauthenticated", {type: toast.TYPE.ERROR})
     }
   },[actionData])
-
+  
   return (
     <>
       <div className="min-h-screen px-32 pt-32 bg-slate-100">

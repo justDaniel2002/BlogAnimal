@@ -19,7 +19,7 @@ const BlogDetail = () => {
     <div className="mt-20 px-20 mx-20 py-10 rounded-xl text-white bg-neutral-700">
         {console.log("blog", Blog)}
         <div className="text-center text-3xl mb-10">{Blog?.title}</div>
-        <div className="text-xl font-light">{Blog?.content}</div>
+        <div className="text-xl font-light" dangerouslySetInnerHTML={{ __html: Blog?.content }}></div>
     </div>
     </>
 }
