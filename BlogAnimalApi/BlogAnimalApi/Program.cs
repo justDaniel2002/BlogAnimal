@@ -1,3 +1,4 @@
+using BlogAnimalApi;
 using BlogAnimalApi.Entity;
 using BlogAnimalApi.Helper;
 using BlogAnimalApi.Repository;
@@ -8,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.OutputFormatters.Add(new CsvOutputFormatter());
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,6 +31,7 @@ builder.Services.AddScoped<PostLikeRepository>();
 builder.Services.AddScoped<PostRepository>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<TagRepository>();
+builder.Services.AddScoped<BlogCommentRepository>();
 //add services
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<BlogService>();

@@ -2,10 +2,10 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import {  useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { accountAtom } from "../atom/accountAtom";
+import { accountAtom } from "../../atom/accountAtom";
 import { toast } from "react-toastify";
-import { editBlogAction, postBlogAction } from "../pages/Blogs/PostBlogAction";
-import api from "../api/api";
+import { editBlogAction, postBlogAction } from "../../pages/Blogs/PostBlogAction";
+import api from "../../api/api";
 
 export const CreateBlogModal = ({ handleClose, blog }) => {
   const account = useRecoilValue(accountAtom);

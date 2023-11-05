@@ -2,7 +2,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { accountAtom } from "../atom/accountAtom";
 import Logo from "../assets/logo.png";
 import { navbarData, staffNavbarData } from "../data/navbarData";
-import { Link, useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
@@ -22,15 +22,25 @@ const Navbar = () => {
     }
   };
 
+  const submitSearch = (event) => {
+    event.preventDefault();
+    const search = new FormData(event.target).get("search");
+    navigate(`/search/${search}`)
+  }
+
   return (
     <>
       <div className="flex justify-between items-center px-10 py-3 border border-neutral-700">
         <div className="flex items-center">
           <img style={{ width: "100px" }} src={Logo} className="mr-2" />
-          <input
-            placeholder="Tìm kiếm trên BlogAnimal"
-            className="p-3 rounded-full bg-neutral-700 text-neutral-300"
-          />
+          <Form onSubmit={submitSearch} method="post">
+            <input
+              name="search"
+              placeholder="Tìm kiếm trên BlogAnimal"
+              className="p-3 rounded-full bg-neutral-700 text-neutral-300"
+              required
+            />
+          </Form>
         </div>
 
         <div className="flex items-center text-neutral-500 w-1/3">
@@ -46,7 +56,7 @@ const Navbar = () => {
               )}
             </Link>
           ))}
-          {account && account.roleId < 3 ? (
+          {account?.roleId && account?.roleId < 3 ? (
             <>
               {staffNavbarData.map((data) => (
                 <Link onClick={() => setCurrentURL(data.alt)} to={data.link}>
@@ -90,9 +100,22 @@ const Navbar = () => {
                   <div>{account?.username}</div>
                 </div>
                 <div className="bg-neutral-500 h-0.5 my-3 w-full"></div>
-                <div onClick={() => {setAccount(undefined); navigate("/")}} className="text-center pb-3">Logout</div>
+                <div
+                  onClick={() => {
+                    setAccount(undefined);
+                    navigate("/");
+                  }}
+                  className="text-center pb-3"
+                >
+                  Logout
+                </div>
                 <div className="bg-neutral-500 h-0.5 my-3 w-full"></div>
-                <div className="text-center pb-3">Profile</div>
+                <Link
+                  to={`Profile/${account?.accountId}`}
+                  className="block text-center pb-3"
+                >
+                  Profile
+                </Link>
               </div>
             </>
           ) : (

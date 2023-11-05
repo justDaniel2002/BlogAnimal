@@ -52,5 +52,34 @@ namespace BlogAnimalApi.Services
             acc.IsBanned = !acc.IsBanned;
             await accountRepo.update(acc);
         }
+
+        public async Task<AccountDTO> getAccountById(string accountId) { 
+            Account acc = await accountRepo.getOne(accountId);
+            AccountDTO accountDTO = mapper.Map<AccountDTO>(acc);
+            return accountDTO;
+        }
+
+        public async Task<string> checkPassword(string accountId, string inputPass)
+        {
+            Account acc = await accountRepo.getOne(accountId);
+
+            if (acc != null&& acc.HashPassword.Equals(inputPass))
+            {
+                return "correct";
+            }
+
+            return "uncorrect";
+        }
+
+        public async Task editAccount (AccountDTO accountDTO)
+        {
+            Account acc = mapper.Map<Account>(accountDTO);
+            await accountRepo.update(acc);
+        }
+
+        public async Task<string> editPassword (string accountId, string oldpasswod, string newpassword)
+        {
+            return await accountRepo.editPassword(accountId, oldpasswod, newpassword);
+        }
     }
 }

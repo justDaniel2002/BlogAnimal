@@ -85,5 +85,25 @@ namespace BlogAnimalApi.Controllers
                 return Ok(ex.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> deletePost(string id)
+        {
+            try
+            {
+                await postService.deletePost(id);
+                return StatusCode(StatusCodes.Status200OK);
+            }catch(Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+        }
+
+        [HttpGet("search/{searchStr}")]
+        public async Task<IActionResult> searchPost(string searchStr)
+        {
+            var result = await postService.search(searchStr);
+            return Ok(result);
+        }
     }
 }

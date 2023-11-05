@@ -23,7 +23,7 @@ const BlogList = () => {
             <div className="text-2xl my-5  font-serif font-medium">
               {blog.title}
             </div>
-            <div className=" mr-5 h-1/3 overflow-hidden">{blog.content}</div>
+            <div className=" mr-5 h-1/3 overflow-hidden" dangerouslySetInnerHTML={{ __html: blog?.content }}></div>
             <span>...</span>
           </Link>
         ))}

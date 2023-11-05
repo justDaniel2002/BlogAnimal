@@ -34,5 +34,21 @@ namespace BlogAnimalApi.Repository
             }
             return post;
         }
+
+        public async Task delOne(string postId)
+        {
+            Post post = await context.Posts.Include(p=> p.PostComments).Include(p=>p.PostLikes).FirstOrDefaultAsync(p => p.PostId.Equals(postId));
+            if (post != null)
+            {
+                context.Posts.Remove(post);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<Post>> search(string search)
+        {
+            return await context.Posts.Include(p => p.PostLikes).Include(p => p.PostComments).Include(p => p.Account)
+                .Where(p => p.Title.ToLower().Contains(search.ToLower())||p.Content.ToLower().Contains(search.ToLower())).ToListAsync();
+        }
     }
 }

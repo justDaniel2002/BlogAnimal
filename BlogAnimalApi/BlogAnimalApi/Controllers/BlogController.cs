@@ -86,5 +86,26 @@ namespace BlogAnimalApi.Controllers
                 return Ok(ex);
             }
         }
+
+        [HttpPost("uploadComment/{blogid}/{accId}")]
+        public async Task<IActionResult> uploadComment(string comment, string blogid, string accId)
+        {
+            try
+            {
+                await blogService.uploadComment(comment, blogid, accId);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+        }
+
+        [HttpGet("search/{searchStr}")]
+        public async Task<IActionResult> searchBlog(string searchStr)
+        {
+            var result = await blogService.search(searchStr);
+            return Ok(result);
+        }
     }
 }

@@ -19,6 +19,10 @@ import { BlogManager } from "./pages/Admin/BlogManager/BlogManager";
 import { blogManagerLoader } from "./pages/Admin/BlogManager/BlogManagerLoader";
 import { AccountManager } from "./pages/Admin/AccountManager/AccountManager";
 import { accountManagerLoader } from "./pages/Admin/AccountManager/AccountManagerLoader";
+import { Profile } from "./pages/Profile/Profile";
+import { profileLoader } from "./pages/Profile/ProfileLoader";
+import { SearchPage } from "./pages/SearchPage/SearchPage";
+import { searchPageLoader } from "./pages/SearchPage/SearchPageLoader";
 
 const LazyPostList = lazy(() => import("./pages/Posts/PostList"));
 const LazyBlogList = lazy(() => import("./pages/Blogs/BlogList"));
@@ -51,6 +55,8 @@ function App() {
 
           <Route path="BlogManager" element={<BlogManager />} loader={blogManagerLoader}/>
           <Route path="AccountManager" element={<AccountManager />} loader={accountManagerLoader}/>
+          <Route path="Profile/:accountId" element={<Profile />} loader={profileLoader}/>
+          <Route path="search/:search" element={<SearchPage />} loader={searchPageLoader}/>
         </Route>
       </Route>
     ),

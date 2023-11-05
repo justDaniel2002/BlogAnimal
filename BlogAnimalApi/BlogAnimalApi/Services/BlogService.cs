@@ -12,11 +12,14 @@ namespace BlogAnimalApi.Services
         private readonly BlogRepository blogRepo;
         private readonly TagRepository tagRepo;
         private readonly BlogTypeRepository blogTypeRepo;
-        public BlogService(BlogRepository _blogRepo, IMapper _mapper, TagRepository _tagRepo, BlogTypeRepository _blogTypeRepo) : base(_mapper)
+        private readonly BlogCommentRepository blogCommentRepo;
+        public BlogService(BlogRepository _blogRepo, IMapper _mapper, TagRepository _tagRepo, BlogTypeRepository _blogTypeRepo,
+            BlogCommentRepository blogCommentRepo) : base(_mapper)
         {
             blogRepo = _blogRepo;
             tagRepo = _tagRepo;
             blogTypeRepo = _blogTypeRepo;
+            this.blogCommentRepo = blogCommentRepo;
         }
 
         public async Task<List<BlogDTO>> convertBlogToDto(List<Blog> blogs)
@@ -128,6 +131,33 @@ namespace BlogAnimalApi.Services
             return blogDTO;
         }
 
+        public async Task<BlogComment> uploadComment(string comment, string blogid, string accId)
+        {
+            try
+            {
+                BlogComment bm = await blogCommentRepo.add(new BlogComment
+                {
+                    Content = comment,
+                    BlogId = blogid,
+                    AccountId = accId
+                });
+                return bm;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
+        }
 
+        public async Task<List<BlogDTO>> search(string search)
+        {
+            List<Blog> blogs = await blogRepo.search(search);
+
+            //map from list of blog -> list of blog dto
+            List<BlogDTO> blogDTOs = await convertBlogToDto(blogs);
+
+            return blogDTOs;
+        }
     }
 }

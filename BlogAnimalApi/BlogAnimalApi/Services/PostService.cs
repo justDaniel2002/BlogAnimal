@@ -147,5 +147,17 @@ namespace BlogAnimalApi.Services
             }
         }
 
+        public async Task deletePost(string postId)
+        {
+            await postRepo.delOne(postId);
+        }
+
+        public async Task<List<PostDTO>> search(string search)
+        {
+            List<Post> posts = await postRepo.search(search);
+            List<PostDTO> postDTOs = mapper.Map<List<PostDTO>>(posts);
+
+            return postDTOs;
+        }
     }
 }

@@ -4,12 +4,12 @@ import { useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import fileToBase64 from "../utils/util";
-import { PhotoArrage } from "./PhotoArrage";
+import fileToBase64 from "../../utils/util";
+import { PhotoArrage } from "../PhotoArrage";
 import { useRecoilValue } from "recoil";
-import { accountAtom } from "../atom/accountAtom";
+import { accountAtom } from "../../atom/accountAtom";
 import { toast } from "react-toastify";
-import { postListAction } from "../pages/Posts/PostListAction";
+import { postListAction } from "../../pages/Posts/PostListAction";
 
 export const CreatePostModal = ({handleClose}) => {
   const account = useRecoilValue(accountAtom);

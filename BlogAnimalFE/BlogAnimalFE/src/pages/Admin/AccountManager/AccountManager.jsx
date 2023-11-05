@@ -71,7 +71,7 @@ export const AccountManager = () => {
       accountId: acc.accountId,
       username: acc.username,
       email: acc.email,
-      role: acc.role.roleName,
+      role: acc?.role?.roleName,
       isBanned: acc.isBanned ? (
         <span className="text-red-500">banned</span>
       ) : (
