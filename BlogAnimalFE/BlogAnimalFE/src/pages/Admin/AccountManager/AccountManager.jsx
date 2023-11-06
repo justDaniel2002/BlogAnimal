@@ -10,6 +10,9 @@ import TableRow from "@mui/material/TableRow";
 import { useLoaderData } from "react-router-dom";
 import api from "../../../api/api";
 import { useState } from "react";
+import { useEffect } from "react";
+import { getAdminDashBoard } from "../../../utils/util";
+import animalbg from "../../../assets/animalBg.png"
 
 const columns = [
   { id: "accountId", label: "Account ID", minWidth: 170 },
@@ -50,6 +53,22 @@ export const AccountManager = () => {
   const [Accounts, setAccounts] = useState(loaderAccounts);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [Nob, setNob] = useState();
+  const [Nop, setNop] = useState();
+  const [Noc, setNoc] = useState();
+  const [Nou, setNou] = useState();
+
+  useEffect(() => {
+    callback();
+  }, []);
+
+  const callback = async () => {
+    const { gNob, gNop, gNou, gNoc } = await getAdminDashBoard();
+    setNob(gNob);
+    setNop(gNop);
+    setNoc(gNoc);
+    setNou(gNou);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -109,7 +128,42 @@ export const AccountManager = () => {
   });
 
   return (
-    <div className="px-20 my-20">
+    <div className="px-20 mt-20 pb-20">
+      <div className="flex mb-10 relative overflow-hidden">
+        
+        <div className="w-1/4 text-2xl font-serif rounded-lg text-white bg-red-500 mr-3 relative">
+        <img
+          class="opacity-30 absolute w-full h-auto"
+          src={animalbg}
+          alt=""
+        />
+          <div className="px-5 pt-5 pb-10">Posts: {Nop}</div>
+        </div>
+        <div className="w-1/4 text-2xl font-serif rounded-lg text-white bg-green-500 mr-3 relative">
+        <img
+          class="opacity-30 -bottom-1 absolute w-full h-auto"
+          src={animalbg}
+          alt=""
+        />
+           <div className="px-5 pt-5 pb-10">Blogs: {Nob}</div>
+        </div>
+        <div className="w-1/4 text-2xl font-serif rounded-lg text-white bg-yellow-500 mr-3 relative">
+        <img
+          class="opacity-30 absolute w-full h-auto"
+          src={animalbg}
+          alt=""
+        />
+           <div className="px-5 pt-5 pb-10">Users: {Nou}</div>
+        </div>
+        <div className="w-1/4 text-2xl font-serif rounded-lg text-white bg-blue-500 mr-3 relative">
+        <img
+          class="opacity-30 -bottom-1 absolute w-full h-auto"
+          src={animalbg}
+          alt=""
+        />
+           <div className="px-5 pt-5 pb-10">Comments: {Noc}</div>
+        </div>
+      </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">

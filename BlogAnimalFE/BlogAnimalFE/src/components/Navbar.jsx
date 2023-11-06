@@ -56,7 +56,7 @@ const Navbar = () => {
               )}
             </Link>
           ))}
-          {account?.roleId && account?.roleId < 3 ? (
+          {account?.roleId && account?.roleId == 1 ? (
             <>
               {staffNavbarData.map((data) => (
                 <Link onClick={() => setCurrentURL(data.alt)} to={data.link}>

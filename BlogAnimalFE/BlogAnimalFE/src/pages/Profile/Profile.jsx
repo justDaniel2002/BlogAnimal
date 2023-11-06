@@ -40,6 +40,10 @@ export const Profile = () => {
     setAccount(undefined);
     navigate(`/SignIn`)
   };
+  const handleClose2 = () => {
+    setOpenCP(false);
+    setOpenEP(false);
+  }
 
   const editProfile = async (password) => {
     const result = await api.checkpassword(profile.accountId, password);
@@ -50,6 +54,8 @@ export const Profile = () => {
         Email: email,
         Contact: contact,
         Facebook: facebook,
+        RoleId: profile.roleId,
+        isBanned: profile.isBanned
       };
       await api.editProfile(data);
     } else {
@@ -139,7 +145,7 @@ export const Profile = () => {
 
       <Modal
         open={openCP}
-        onClose={handleClose}
+        onClose={handleClose2}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -153,7 +159,7 @@ export const Profile = () => {
 
       <Modal
         open={openEP}
-        onClose={handleClose}
+        onClose={handleClose2}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

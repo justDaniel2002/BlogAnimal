@@ -1,3 +1,5 @@
+import api from "../api/api";
+
 export function fileToBase64(file) {
   console.log(file);
   return new Promise((resolve) => {
@@ -40,5 +42,20 @@ export function convertFileListToBytes(fileList) {
   }
 }
 
+export const getAdminDashBoard = async() =>{
+  const blogs = await api.getAllBlog()
+  const posts = await api.getAllPost()
+  const users = await api.getAllAccounts()
+  let numberOfComments = 0;
+  blogs.forEach(blog => {
+    numberOfComments += blog.blogComments.length
+  });
+
+  posts.forEach(post => {
+    numberOfComments += post.postComments.length
+  })
+
+  return {gNob: blogs.length, gNop: posts.length, gNou: users.length, gNoc: numberOfComments}
+}
 
 export default fileToBase64;
