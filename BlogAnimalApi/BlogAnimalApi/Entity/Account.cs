@@ -21,7 +21,7 @@ namespace BlogAnimalApi.Entity
         public string? Contact { get; set; }
         public string? Facebook { get; set; }
         public bool? IsBanned { get; set; }
-        public int? RoleId { get; set; } = 2;
+        public int? RoleId { get; set; } = 3;
 
         public virtual Role? Role { get; set; }
         public virtual ICollection<BlogComment> BlogComments { get; set; }

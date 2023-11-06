@@ -17,7 +17,7 @@ namespace BlogAnimalApi.Repository
 
         public async Task<Post> getOne(string id)
         {
-            return await context.Posts.Include(p => p.PostLikes).Include(p => p.PostComments).Include(p => p.Account).FirstOrDefaultAsync(p => p.PostId.Equals(id));
+            return await context.Posts.Include(p => p.PostLikes).Include(p => p.PostComments).ThenInclude(p => p.Account).FirstOrDefaultAsync(p => p.PostId.Equals(id));
         }
 
         public async Task<Post> uploadImageString(string images, string id)
