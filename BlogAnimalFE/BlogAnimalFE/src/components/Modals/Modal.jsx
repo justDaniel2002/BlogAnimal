@@ -68,7 +68,7 @@ export const CreatePostModal = ({handleClose}) => {
 
   return (
     <>
-      <div className="text-white bg-neutral-900 max-h-screen">
+      <div className="text-white bg-neutral-900 max-h-screen overflow-y-scroll">
         <div className="text-center text-3xl mb-5 font-bold">Create Post</div>
         <div className="text-right">
           <button

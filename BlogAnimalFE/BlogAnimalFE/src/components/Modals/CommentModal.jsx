@@ -21,7 +21,7 @@ export const CommentModal = ({ handleClose, Post }) => {
   return (
     <>
       {Post ? (
-        <div className="bg-neutral-900 text-white h-4/5 overflow-y-scroll">
+        <div className="bg-neutral-900 text-white max-h-screen overflow-y-scroll">
           <div className="mb-5">
             <div className="font-medium mb-3 flex">
               <img
