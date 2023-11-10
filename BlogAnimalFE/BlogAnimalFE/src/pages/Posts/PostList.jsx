@@ -15,9 +15,10 @@ import { CreatePostModal } from "../../components/Modals/Modal";
 import { PhotoArrageImgUrl } from "../../components/PhotoArrage";
 import { CommentModal } from "../../components/Modals/CommentModal";
 import { PostImagesModal } from "../../components/PostImagesModal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ArtTrackIcon from "@mui/icons-material/ArtTrack";
 
 const PostList = () => {
   //const posts = useLoaderData();
@@ -25,6 +26,7 @@ const PostList = () => {
   const [postForCommentModal, setPFCM] = useState();
   const [postForImageModal, setPFIM] = useState();
   const [posts, setPosts] = useState([]);
+  const [usPosts, setUSPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [openCM, setOpenCM] = useState(false);
   const [openPI, setOpenPI] = useState(false);
@@ -42,7 +44,8 @@ const PostList = () => {
 
   const CallBack = async () => {
     const getPosts = await api.getAllPost();
-    setPosts(getPosts);
+    setPosts(getPosts.filter((post) => post.isSecure));
+    setUSPosts(getPosts.filter((post) => !post.isSecure));
   };
 
   useEffect(() => {
@@ -65,7 +68,22 @@ const PostList = () => {
   };
   return (
     <>
-      <div className="text-white mt-32 pb-32">
+      <div className="text-white mt-20 pb-32">
+        {account?.roleId === 1 ? (
+          <div className=" w-5/12 m-auto mb-10">
+            <Link
+              to={`/UnsecurePosts`}
+              className="bg-neutral-800 inline-block p-3 rounded-xl"
+            >
+              <ArtTrackIcon />
+              <div className="absolute rounded-full bg-red-600 px-2 ml-3 mb-3">
+                {usPosts.length}
+              </div>
+            </Link>
+          </div>
+        ) : (
+          ""
+        )}
         {account ? (
           <div className="rounded-xl w-5/12 m-auto bg-neutral-800 p-5 mb-10">
             <div className="flex mb-3 items-center">
@@ -119,7 +137,7 @@ const PostList = () => {
                       <div
                         onClick={async () => {
                           await api.deletePost(post.postId);
-                          await CallBack()
+                          await CallBack();
                         }}
                         className="absolute hidden bg-neutral-800 py-3 px-5"
                       >

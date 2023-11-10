@@ -193,6 +193,14 @@ const deletePost = async (postId) => {
   return res.data;
 };
 
+const securePost = async (postId) => {
+  const res = await axios
+    .put(`https://localhost:7252/api/Post/secure/${postId}`)
+    .catch((err) => console.log(err));
+  console.log(res);
+  return res.data;
+}
+
 const api = {
   getAllPost,
   getAllBlog,
@@ -216,6 +224,7 @@ const api = {
   deletePost,
 
   likePost,
+  securePost,
  
   banAccount,
 

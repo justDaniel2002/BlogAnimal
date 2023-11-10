@@ -50,7 +50,7 @@ export const SearchPage = () => {
     const result = await api.likePost(postId, account.accountId);
     console.log(result);
     const getPosts = await api.getAllPost();
-    setPosts(getPosts);
+    setPosts(getPosts.filter((post) => post.isSecure));
   };
 
   return (

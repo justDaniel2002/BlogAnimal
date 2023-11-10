@@ -159,5 +159,10 @@ namespace BlogAnimalApi.Services
 
             return postDTOs;
         }
+
+        public async Task secure(string postId)
+        {
+            await postRepo.secure(postId);
+        }
     }
 }

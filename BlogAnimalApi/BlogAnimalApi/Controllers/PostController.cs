@@ -105,5 +105,18 @@ namespace BlogAnimalApi.Controllers
             var result = await postService.search(searchStr);
             return Ok(result);
         }
+
+        [HttpPut("secure/{postId}")]
+        public async Task<IActionResult> securePost(string postId)
+        {
+            try
+            {
+                await postService.secure(postId);
+                return StatusCode(StatusCodes.Status200OK);
+            }catch (Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+        }
     }
 }

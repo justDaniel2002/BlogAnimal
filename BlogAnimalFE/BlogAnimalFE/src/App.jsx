@@ -25,6 +25,7 @@ import { SearchPage } from "./pages/SearchPage/SearchPage";
 import { searchPageLoader } from "./pages/SearchPage/SearchPageLoader";
 
 const LazyPostList = lazy(() => import("./pages/Posts/PostList"));
+const LazyUnsecurePostList = lazy(() => import("./pages/Posts/UnsecurePostList"));
 const LazyBlogList = lazy(() => import("./pages/Blogs/BlogList"));
 
 function App() {
@@ -48,6 +49,14 @@ function App() {
             element={
               <Suspense fallback={<h1 className="text-white">Loading...</h1>}>
                 <LazyPostList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="UnsecurePosts"
+            element={
+              <Suspense fallback={<h1 className="text-white">Loading...</h1>}>
+                <LazyUnsecurePostList />
               </Suspense>
             }
           />

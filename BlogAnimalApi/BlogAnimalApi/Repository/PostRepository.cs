@@ -50,5 +50,15 @@ namespace BlogAnimalApi.Repository
             return await context.Posts.Include(p => p.PostLikes).Include(p => p.PostComments).Include(p => p.Account)
                 .Where(p => p.Title.ToLower().Contains(search.ToLower())||p.Content.ToLower().Contains(search.ToLower())).ToListAsync();
         }
+
+        public async Task secure(string postId)
+        {
+            Post post = await context.Posts.FindAsync(postId);
+            if (post != null)
+            {
+                post.IsSecure = true;
+            }
+            await context.SaveChangesAsync();
+        }
     }
 }
