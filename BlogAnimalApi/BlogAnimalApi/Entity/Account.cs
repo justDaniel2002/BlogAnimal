@@ -12,6 +12,8 @@ namespace BlogAnimalApi.Entity
             PostComments = new HashSet<PostComment>();
             PostLikes = new HashSet<PostLike>();
             Posts = new HashSet<Post>();
+            TradeComments = new HashSet<TradeComment>();
+            TradePosts = new HashSet<TradePost>();
         }
 
         public string AccountId { get; set; } = null!;
@@ -21,7 +23,7 @@ namespace BlogAnimalApi.Entity
         public string? Contact { get; set; }
         public string? Facebook { get; set; }
         public bool? IsBanned { get; set; }
-        public int? RoleId { get; set; } = 3;
+        public int? RoleId { get; set; }
 
         public virtual Role? Role { get; set; }
         public virtual ICollection<BlogComment> BlogComments { get; set; }
@@ -29,5 +31,7 @@ namespace BlogAnimalApi.Entity
         public virtual ICollection<PostComment> PostComments { get; set; }
         public virtual ICollection<PostLike> PostLikes { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<TradeComment> TradeComments { get; set; }
+        public virtual ICollection<TradePost> TradePosts { get; set; }
     }
 }

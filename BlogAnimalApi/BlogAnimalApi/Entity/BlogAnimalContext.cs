@@ -27,6 +27,8 @@ namespace BlogAnimalApi.Entity
         public virtual DbSet<PostLike> PostLikes { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Tag> Tags { get; set; } = null!;
+        public virtual DbSet<TradeComment> TradeComments { get; set; } = null!;
+        public virtual DbSet<TradePost> TradePosts { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -361,6 +363,87 @@ namespace BlogAnimalApi.Entity
                 entity.Property(e => e.TagName)
                     .HasMaxLength(100)
                     .HasColumnName("tag_name");
+            });
+
+            modelBuilder.Entity<TradeComment>(entity =>
+            {
+                entity.HasKey(e => e.CommentId)
+                    .HasName("PK__TradeCom__CDDE919D96732E36");
+
+                entity.ToTable("TradeComment");
+
+                entity.Property(e => e.CommentId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("commentId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.AccountId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("account_id");
+
+                entity.Property(e => e.Content).IsUnicode(true);
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("date")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.TradeId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("tradeId");
+
+                entity.HasOne(d => d.Account)
+                    .WithMany(p => p.TradeComments)
+                    .HasForeignKey(d => d.AccountId)
+                    .HasConstraintName("FK__TradeComm__accou__76969D2E");
+
+                entity.HasOne(d => d.Trade)
+                    .WithMany(p => p.TradeComments)
+                    .HasForeignKey(d => d.TradeId)
+                    .HasConstraintName("FK__TradeComm__trade__778AC167");
+            });
+
+            modelBuilder.Entity<TradePost>(entity =>
+            {
+                entity.HasKey(e => e.TradeId)
+                    .HasName("PK__TradePos__F7D149DDCDEED70D");
+
+                entity.ToTable("TradePost");
+
+                entity.Property(e => e.TradeId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("tradeId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.AccountId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("account_id");
+
+                entity.Property(e => e.Content)
+                    .IsUnicode(true)
+                    .HasColumnName("content");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("date")
+                    .HasColumnName("createdDate")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsSecure)
+                    .HasColumnName("isSecure")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsTrade)
+                    .HasColumnName("isTrade")
+                    .HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.Account)
+                    .WithMany(p => p.TradePosts)
+                    .HasForeignKey(d => d.AccountId)
+                    .HasConstraintName("FK__TradePost__accou__73BA3083");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -19,6 +19,8 @@ namespace BlogAnimalApi.Helper
             CreateMap<PostComment, PostCommentDTO>().ReverseMap();
             CreateMap<PostLike, PostLikeDTO>().ReverseMap();
             CreateMap<Post, PostDTO>().ReverseMap();
+            CreateMap<TradePost, TradeDTO>().ReverseMap();
+            CreateMap<TradeComment, TradeCommentDTO>().ReverseMap();
             //
             CreateMap<Account, SignInDTO>().ReverseMap();
             CreateMap<Account, SignUpDTO>().ReverseMap();

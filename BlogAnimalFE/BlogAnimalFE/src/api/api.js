@@ -83,6 +83,26 @@ const uploadPostImage = async (Images, id) => {
   return res.data;
 };
 
+const uploadTradeComment = async (data) => {
+  const res = await axios
+    .post(
+      `https://localhost:7252/api/Trade/commentTrade/`,data
+    )
+    .catch((err) => console.log(err));
+  console.log(res);
+  return res.data;
+};
+
+const uploadTrade = async (data) => {
+  const res = await axios
+    .post(
+      `https://localhost:7252/api/Trade`,data
+    )
+    .catch((err) => console.log(err));
+  console.log(res);
+  return res.data;
+};
+
 const uploadBlogComment = async (comment, blogId, accId) => {
   const res = await axios
     .post(
@@ -137,6 +157,14 @@ const getAccountById = async (id) => {
   return res.data;
 };
 
+const getAllTradePost = async (id) => {
+  const res = await axios
+    .get(`https://localhost:7252/api/Trade`)
+    .catch((err) => console.log(err));
+  console.log(res);
+  return res.data;
+};
+
 const banAccount = async (accountId) => {
   const res = await axios
     .post(`https://localhost:7252/api/Account/banAccount/${accountId}`)
@@ -177,6 +205,14 @@ const editProfile = async (data) => {
   return res.data;
 };
 
+const deleteTrade = async (tradeId) => {
+  const res = await axios
+    .delete(`https://localhost:7252/api/Trade/${tradeId}`)
+    .catch((err) => console.log(err));
+  console.log(res);
+  return res.data;
+};
+
 const deleteBlog = async (blogId) => {
   const res = await axios
     .delete(`https://localhost:7252/api/Blog/${blogId}`)
@@ -201,6 +237,22 @@ const securePost = async (postId) => {
   return res.data;
 }
 
+const secureTrade = async (tradeId) => {
+  const res = await axios
+    .put(`https://localhost:7252/api/Trade/secure/${tradeId}`)
+    .catch((err) => console.log(err));
+  console.log(res);
+  return res.data;
+}
+
+const isTrade = async (tradeId) => {
+  const res = await axios
+    .put(`https://localhost:7252/api/Trade/setTrade/${tradeId}`)
+    .catch((err) => console.log(err));
+  console.log(res);
+  return res.data;
+};
+
 const api = {
   getAllPost,
   getAllBlog,
@@ -209,12 +261,15 @@ const api = {
   getBlogById,
   getAllAccounts,
   getAccountById,
+  getAllTradePost,
   
   createPost,
   createBlog,
   uploadPostImage,
   uploadComment,
   uploadBlogComment,
+  uploadTradeComment,
+  uploadTrade,
 
   editBlog,
   editPassword,
@@ -222,16 +277,19 @@ const api = {
   
   deleteBlog,
   deletePost,
+  deleteTrade,
 
   likePost,
   securePost,
+  secureTrade,
  
   banAccount,
 
   checkpassword,
   
   searchPost,
-  searchBlog
+  searchBlog,
+  isTrade,
 };
 
 export default api;

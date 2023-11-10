@@ -32,10 +32,15 @@ builder.Services.AddScoped<PostRepository>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<TagRepository>();
 builder.Services.AddScoped<BlogCommentRepository>();
+builder.Services.AddScoped<TradeRepository>();
+builder.Services.AddScoped<TradeCommentRepository>();
+
 //add services
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<BlogService>();
 builder.Services.AddScoped<PostService>();
+builder.Services.AddScoped<TradeService>();
+
 //Add auto mapper
 builder.Services.AddAutoMapper(typeof(Program));
 //Add util

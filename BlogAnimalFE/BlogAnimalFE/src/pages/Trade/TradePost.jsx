@@ -11,16 +11,25 @@ import {
   createPostImagemodalStyle,
   createPostmodalStyle,
 } from "../../style/style";
-import { CreatePostModal } from "../../components/Modals/Modal";
+import {
+  CreatePostModal,
+  CreateTradeModal,
+} from "../../components/Modals/Modal";
 import { PhotoArrageImgUrl } from "../../components/PhotoArrage";
-import { CommentModal } from "../../components/Modals/CommentModal";
+import {
+  CommentModal,
+  TradeCommentModal,
+} from "../../components/Modals/CommentModal";
 import { PostImagesModal } from "../../components/PostImagesModal";
 import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArtTrackIcon from "@mui/icons-material/ArtTrack";
+import PaidIcon from "@mui/icons-material/Paid";
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
-const PostList = () => {
+const TradePost = () => {
   //const posts = useLoaderData();
   const account = useRecoilValue(accountAtom);
   const [postForCommentModal, setPFCM] = useState();
@@ -43,9 +52,9 @@ const PostList = () => {
   const handleOpenPI = () => setOpenPI(true);
 
   const CallBack = async () => {
-    const getPosts = await api.getAllPost();
-    setPosts(getPosts.filter((post) => post.isSecure));
-    setUSPosts(getPosts.filter((post) => !post.isSecure));
+    const getPosts = await api.getAllTradePost();
+    setPosts(getPosts);
+    setUSPosts(getPosts.filter(post => !post.isSecure))
   };
 
   useEffect(() => {
@@ -56,27 +65,29 @@ const PostList = () => {
     setOpen(false);
     setOpenCM(false);
     setOpenPI(false);
-    const getPosts = await api.getAllPost();
-    setPosts(getPosts);
+    await CallBack()
+    
   };
 
-  const likePost = async (postId) => {
-    const result = await api.likePost(postId, account.accountId);
-    console.log(result);
-    const getPosts = await api.getAllPost();
-    setPosts(getPosts);
-  };
+ 
   return (
     <>
       <div className="text-white mt-20 pb-32">
-        {account?.roleId===1?<div className=" w-5/12 m-auto mb-10">
-          <Link to={`/UnsecurePosts`} className="bg-neutral-800 inline-block p-3 rounded-xl">
-            <ArtTrackIcon />
-            <div className="absolute rounded-full bg-red-600 px-2 ml-3 mb-3">
-              {usPosts.length}
-            </div>
-          </Link>
-        </div>:""}
+        {account?.roleId === 1 ? (
+          <div className=" w-5/12 m-auto mb-10">
+            <Link
+              to={`/UnsecureTrade`}
+              className="bg-neutral-800 inline-block p-3 rounded-xl"
+            >
+              <PostAddIcon />
+              <div className="absolute rounded-full bg-red-600 px-2 ml-3 mb-3">
+                {usPosts.length}
+              </div>
+            </Link>
+          </div>
+        ) : (
+          ""
+        )}
         {account ? (
           <div className="rounded-xl w-5/12 m-auto bg-neutral-800 p-5 mb-10">
             <div className="flex mb-3 items-center">
@@ -98,7 +109,7 @@ const PostList = () => {
         {posts?.map((post) => (
           <>
             <div
-              key={post.postId}
+              key={post.tradeId}
               className="rounded-xl w-5/12 m-auto bg-neutral-800 mb-20"
             >
               <div className="pt-3 mx-5">
@@ -127,15 +138,24 @@ const PostList = () => {
                       }}
                     >
                       <MenuIcon />
-                      <div
-                        onClick={async () => {
-                          await api.deletePost(post.postId);
-                          await CallBack();
-                        }}
-                        className="absolute hidden bg-neutral-800 py-3 px-5"
-                      >
-                        <div className="text-red-500 flex items-center">
+                      <div className="absolute hidden bg-neutral-800 py-3 px-5">
+                        <div
+                          onClick={async () => {
+                            await api.deleteTrade(post.tradeId);
+                            await CallBack();
+                          }}
+                          className="text-red-500 flex items-center"
+                        >
                           <DeleteIcon /> Delete
+                        </div>
+                        <div
+                          onClick={async () => {
+                            await api.isTrade(post.tradeId);
+                            await CallBack();
+                          }}
+                          className="text-blue-500 flex items-center mt-3"
+                        >
+                          <CurrencyExchangeIcon /> Transacted
                         </div>
                       </div>
                     </div>
@@ -149,13 +169,13 @@ const PostList = () => {
                   {post?.createdDate}
                 </div>
               </div>
-              <div className="my-5 mx-5 pl-2 font-medium">{post?.title}</div>
+              {/* <div className="my-5 mx-5 pl-2 font-medium">{post?.title}</div> */}
               <div
                 className="my-5 mx-5 pl-2"
                 dangerouslySetInnerHTML={{ __html: post?.content }}
               ></div>
 
-              {post?.images ? (
+              {/* {post?.images ? (
                 <div
                   onClick={() => {
                     setPFIM(post);
@@ -167,11 +187,11 @@ const PostList = () => {
                 </div>
               ) : (
                 ""
-              )}
+              )} */}
 
               <div className="bg-neutral-700 h-1 w-full" />
               <div className="flex justify-between text-neutral-400 mx-10 py-5">
-                <div
+                {/* <div
                   className={`${
                     post.postLikes.some(
                       (like) => like.accountId == account?.accountId
@@ -189,17 +209,23 @@ const PostList = () => {
                 >
                   <ThumbUpOffAltIcon /> Thích{" "}
                   {post.postLikes.length > 0 ? post.postLikes.length : ""}
-                </div>
+                </div> */}
                 <div onClick={() => handleOpenCM(post)}>
                   <ChatBubbleOutlineIcon />
                   Bình luận
                 </div>
-                <div>
-                  <SendIcon /> Chia sẻ
-                </div>
+                {post.isTrade ? (
+                  <div className="text-green-500">
+                    <PaidIcon /> Đã giao dịch
+                  </div>
+                ) : (
+                  <div className="text-yellow-500">
+                    <PaidIcon /> Đang giao dịch
+                  </div>
+                )}
               </div>
               <div className="bg-neutral-700 h-1 w-full mb-3" />
-              {post?.postComments[0] ? (
+              {post?.tradeComments[0] ? (
                 <>
                   <div>
                     <a
@@ -217,9 +243,9 @@ const PostList = () => {
                       </div>
                       <div className="pl-3 bg-neutral-700 p-3 rounded-2xl">
                         <div className="font-semibold mb-2">
-                          {post?.postComments[0]?.account.username}
+                          {post?.tradeComments[0]?.account.username}
                         </div>
-                        <div>{post?.postComments[0]?.content}</div>
+                        <div>{post?.tradeComments[0]?.content}</div>
                       </div>
                     </div>
                   </div>
@@ -254,7 +280,7 @@ const PostList = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={createPostmodalStyle}>
-          <CreatePostModal handleClose={handleClose} />
+          <CreateTradeModal handleClose={handleClose} />
         </Box>
       </Modal>
 
@@ -265,7 +291,10 @@ const PostList = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={createPostmodalStyle}>
-          <CommentModal handleClose={handleClose} Post={postForCommentModal} />
+          <TradeCommentModal
+            handleClose={handleClose}
+            Post={postForCommentModal}
+          />
         </Box>
       </Modal>
 
@@ -283,4 +312,4 @@ const PostList = () => {
   );
 };
 
-export default PostList;
+export default TradePost;

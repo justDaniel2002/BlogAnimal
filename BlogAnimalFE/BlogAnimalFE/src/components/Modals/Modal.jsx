@@ -10,8 +10,9 @@ import { useRecoilValue } from "recoil";
 import { accountAtom } from "../../atom/accountAtom";
 import { toast } from "react-toastify";
 import { postListAction } from "../../pages/Posts/PostListAction";
+import api from "../../api/api";
 
-export const CreatePostModal = ({handleClose}) => {
+export const CreatePostModal = ({ handleClose }) => {
   const account = useRecoilValue(accountAtom);
   const [title, setTitle] = useState("");
   const [files, setFiles] = useState([]);
@@ -26,14 +27,15 @@ export const CreatePostModal = ({handleClose}) => {
   ];
 
   const onSubmit = async () => {
-    if (
-      title.length === 0 ||
-      content.length === 0 ||
-      files.length == 0
-    ) {
+    if (title.length === 0 || content.length === 0 || files.length == 0) {
       toast("Values are empty", { type: toast.TYPE.WARNING });
     } else {
-      const result = await postListAction(title, files, content, account.accountId);
+      const result = await postListAction(
+        title,
+        files,
+        content,
+        account.accountId
+      );
       console.log(result);
       handleClose();
     }
@@ -128,6 +130,57 @@ export const CreatePostModal = ({handleClose}) => {
             </>
           )}
         </div>
+      </div>
+    </>
+  );
+};
+
+export const CreateTradeModal = ({ handleClose }) => {
+  const account = useRecoilValue(accountAtom);
+  const [content, setContent] = useState("Content");
+
+  const customnToolBar = [
+    [{ header: "1" }, { header: "2" }, "bold", "italic", "underline"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link", "image", "blockquote"],
+    ["clean"],
+  ];
+
+  const onSubmit = async () => {
+    if (content.length === 0) {
+      toast("Values are empty", { type: toast.TYPE.WARNING });
+    } else {
+      const result = await api.uploadTrade({
+        content,
+        accountId: account.accountId,
+      });
+      console.log(result);
+      handleClose();
+    }
+  };
+
+  return (
+    <>
+      <div className="text-white bg-neutral-900 max-h-screen overflow-y-scroll">
+        <div className="text-center text-3xl mb-5 font-bold">
+          Create Trade Post
+        </div>
+        <div className="text-right">
+          <button
+            onClick={onSubmit}
+            className="p-2 px-5 mb-5 font-medium rounded-xl bg-blue-600"
+          >
+            Post
+          </button>
+        </div>
+        <div className=" bg-neutral-800 h-1"></div>
+        <ReactQuill
+          theme="snow"
+          modules={{ toolbar: customnToolBar }}
+          value={content}
+          onChange={(content) => setContent(content)}
+          className="rounded-lg mt-5 mb-3 w-full px-5 py-2 border text-black border-neutral-200 bg-neutral-100"
+        />
       </div>
     </>
   );
