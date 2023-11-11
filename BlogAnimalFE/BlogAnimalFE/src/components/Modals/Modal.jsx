@@ -27,7 +27,7 @@ export const CreatePostModal = ({ handleClose }) => {
   ];
 
   const onSubmit = async () => {
-    if (title.length === 0 || content.length === 0 || files.length == 0) {
+    if (title.length === 0 || content.length === 0) {
       toast("Values are empty", { type: toast.TYPE.WARNING });
     } else {
       const result = await postListAction(

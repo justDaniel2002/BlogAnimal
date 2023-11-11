@@ -56,8 +56,7 @@ const PostList = () => {
     setOpen(false);
     setOpenCM(false);
     setOpenPI(false);
-    const getPosts = await api.getAllPost();
-    setPosts(getPosts);
+    CallBack()
   };
 
   const likePost = async (postId) => {
