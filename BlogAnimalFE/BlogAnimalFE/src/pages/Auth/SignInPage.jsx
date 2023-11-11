@@ -8,27 +8,28 @@ import { useRecoilState } from "recoil";
 import { accountAtom } from "../../atom/accountAtom";
 import { signUpmodalStyle } from "../../style/style";
 import { toast } from "react-toastify";
-
+import { sessionExtension } from "../../utils/sessionExtension";
 
 const SignInPage = () => {
   const [account, setAccount] = useRecoilState(accountAtom);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const actionData = useActionData();
 
-  useEffect(()=>{
+  useEffect(() => {
     handleClose();
-    if(actionData?.email){
-        setAccount(actionData)
-        navigate("/")
-    } else if(actionData=="Unauthenticated"){
-      toast("Unauthenticated", {type: toast.TYPE.ERROR})
+    if (actionData?.email) {
+      sessionExtension.setTItem("account", actionData);
+      setAccount(actionData);
+      navigate("/");
+    } else if (actionData == "Unauthenticated") {
+      toast("Unauthenticated", { type: toast.TYPE.ERROR });
     }
-  },[actionData])
-  
+  }, [actionData]);
+
   return (
     <>
       <div className="min-h-screen px-32 pt-32 bg-slate-100">
@@ -53,7 +54,10 @@ const SignInPage = () => {
                   placeholder="password"
                   type="password"
                 />
-                <button type="submit" className="font-medium w-full py-3 mb-3 text-white bg-blue-500 rounded-lg">
+                <button
+                  type="submit"
+                  className="font-medium w-full py-3 mb-3 text-white bg-blue-500 rounded-lg"
+                >
                   Log In
                 </button>
                 <Link to={"/ForgotPassword"} className="text-blue-500">

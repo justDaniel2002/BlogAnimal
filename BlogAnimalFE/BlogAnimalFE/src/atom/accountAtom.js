@@ -1,6 +1,7 @@
 import { atom } from "recoil";
+import { sessionExtension } from "../utils/sessionExtension";
 
 export const accountAtom = atom({
     key: "account",
-    default: undefined
+    default: sessionExtension.getTItem("account")
 })

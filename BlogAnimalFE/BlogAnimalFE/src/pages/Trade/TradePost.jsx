@@ -53,7 +53,7 @@ const TradePost = () => {
 
   const CallBack = async () => {
     const getPosts = await api.getAllTradePost();
-    setPosts(getPosts);
+    setPosts(getPosts.filter(post => post.isSecure));
     setUSPosts(getPosts.filter(post => !post.isSecure))
   };
 

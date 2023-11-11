@@ -103,6 +103,7 @@ const Navbar = () => {
                 <div
                   onClick={() => {
                     setAccount(undefined);
+                    sessionStorage.clear()
                     navigate("/");
                   }}
                   className="text-center pb-3"
