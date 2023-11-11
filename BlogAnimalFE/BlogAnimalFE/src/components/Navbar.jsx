@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { accountAtom } from "../atom/accountAtom";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/logo3.png";
 import { navbarData, staffNavbarData } from "../data/navbarData";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ const Navbar = () => {
     <>
       <div className="flex justify-between items-center px-10 py-3 border border-neutral-700">
         <div className="flex items-center">
-          <img style={{ width: "100px" }} src={Logo} className="mr-2" />
+          <img style={{ width: "70px" }} src={Logo} className="mr-2 rounded-full" />
           <Form onSubmit={submitSearch} method="post">
             <input
               name="search"

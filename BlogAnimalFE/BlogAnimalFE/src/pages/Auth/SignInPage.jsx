@@ -1,5 +1,5 @@
 import { Form, Link, useActionData, useNavigate } from "react-router-dom";
-import logo2 from "../../assets/logo2.png";
+import logo2 from "../../assets/logo3.png";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
@@ -32,8 +32,8 @@ const SignInPage = () => {
 
   return (
     <>
-      <div className="min-h-screen px-32 pt-32 bg-slate-100">
-        <div className="flex">
+      <div className="min-h-screen px-32 py-16 bg-slate-100">
+        <div className="flex items-center">
           <div className="w-3/5">
             <img src={logo2} className="w-4/5" />
           </div>
