@@ -16,7 +16,7 @@ namespace BlogAnimalApi.Repository
 
         public async Task<List<TradePost>> getAll()
         {
-            return await context.TradePosts.Include(t => t.Account).Include(a => a.TradeComments).ThenInclude(t => t.Account).ToListAsync();
+            return await context.TradePosts.Include(t => t.Account).Include(a => a.TradeComments).ThenInclude(t => t.Account).OrderByDescending(b => b.CreatedDate).ToListAsync();
         }
 
         public async Task setTrade(string tradeId)

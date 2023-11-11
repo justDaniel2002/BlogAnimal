@@ -12,7 +12,7 @@ namespace BlogAnimalApi.Repository
 
         public async Task<List<Blog>> getAll()
         {
-            return await context.Blogs.Include(b => b.BlogType).Include(b => b.PetType).Include(b => b.BlogComments).ThenInclude(c=> c.Account).Include(b => b.Account).Include(b => b.BlogTags).ToListAsync();
+            return await context.Blogs.Include(b => b.BlogType).Include(b => b.PetType).Include(b => b.BlogComments).ThenInclude(c=> c.Account).Include(b => b.Account).Include(b => b.BlogTags).OrderByDescending(b => b.CreatedDate).ToListAsync();
         }
 
         public async Task<Blog> get(string id)
