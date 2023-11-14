@@ -10,6 +10,7 @@ import { PostImagesModal } from "../../components/PostImagesModal";
 import MenuIcon from "@mui/icons-material/Menu";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
+import { numberToVietnameseDong } from "../../utils/util";
 
 const UnsecureTrade = () => {
   //const posts = useLoaderData();
@@ -103,6 +104,7 @@ const UnsecureTrade = () => {
                 className="my-5 mx-5 pl-2"
                 dangerouslySetInnerHTML={{ __html: post?.content }}
               ></div>
+              <div className="my-5 mx-5 pl-2">{numberToVietnameseDong(post.price)}</div>
             </div>
           </>
         ))}

@@ -72,7 +72,7 @@ function App() {
             }
           />
           <Route
-            path="UnsecureTrade"
+            path="UnsecureTrades"
             element={
               <Suspense fallback={<h1 className="text-white">Loading...</h1>}>
                 <LazyUnsecureTrade />

@@ -138,6 +138,7 @@ export const CreatePostModal = ({ handleClose }) => {
 export const CreateTradeModal = ({ handleClose }) => {
   const account = useRecoilValue(accountAtom);
   const [content, setContent] = useState("Content");
+  const [price, setPrice] = useState(0);
 
   const customnToolBar = [
     [{ header: "1" }, { header: "2" }, "bold", "italic", "underline"],
@@ -152,6 +153,7 @@ export const CreateTradeModal = ({ handleClose }) => {
     } else {
       const result = await api.uploadTrade({
         content,
+        price,
         accountId: account.accountId,
       });
       console.log(result);
@@ -174,6 +176,13 @@ export const CreateTradeModal = ({ handleClose }) => {
           </button>
         </div>
         <div className=" bg-neutral-800 h-1"></div>
+        <input
+          type="number"
+          className="w-1/3 p-3 bg-neutral-800 rounded-2xl mt-5"
+          placeholder="Price"
+          value={price}
+          onChange={(event) => setPrice(event.target.value)}
+        />
         <ReactQuill
           theme="snow"
           modules={{ toolbar: customnToolBar }}

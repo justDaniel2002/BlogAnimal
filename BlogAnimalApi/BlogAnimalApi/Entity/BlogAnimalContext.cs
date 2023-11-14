@@ -383,8 +383,6 @@ namespace BlogAnimalApi.Entity
                     .IsUnicode(false)
                     .HasColumnName("account_id");
 
-                entity.Property(e => e.Content).IsUnicode(true);
-
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("date")
                     .HasDefaultValueSql("(getdate())");
@@ -423,9 +421,7 @@ namespace BlogAnimalApi.Entity
                     .IsUnicode(false)
                     .HasColumnName("account_id");
 
-                entity.Property(e => e.Content)
-                    .IsUnicode(true)
-                    .HasColumnName("content");
+                entity.Property(e => e.Content).HasColumnName("content");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("date")
@@ -439,6 +435,10 @@ namespace BlogAnimalApi.Entity
                 entity.Property(e => e.IsTrade)
                     .HasColumnName("isTrade")
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Price)
+                    .HasColumnType("money")
+                    .HasColumnName("price");
 
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.TradePosts)

@@ -28,6 +28,8 @@ import ArtTrackIcon from "@mui/icons-material/ArtTrack";
 import PaidIcon from "@mui/icons-material/Paid";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import { numberToVietnameseDong } from "../../utils/util";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const TradePost = () => {
   //const posts = useLoaderData();
@@ -39,6 +41,7 @@ const TradePost = () => {
   const [open, setOpen] = useState(false);
   const [openCM, setOpenCM] = useState(false);
   const [openPI, setOpenPI] = useState(false);
+  const [order, setOrder] = useState("Bài viết mới nhất");
   const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
   const handleOpenCM = (post) => {
@@ -73,21 +76,90 @@ const TradePost = () => {
   return (
     <>
       <div className="text-white mt-20 pb-32">
-        {account?.roleId === 1 ? (
-          <div className=" w-5/12 m-auto mb-10">
-            <Link
-              to={`/UnsecureTrade`}
-              className="bg-neutral-800 inline-block p-3 rounded-xl"
+      <div className="flex w-5/12 m-auto mb-10 justify-between items-center">
+          {account?.roleId === 1 ? (
+            <div>
+              <Link
+                to={`/UnsecureTrades`}
+                className="bg-neutral-800 inline-block p-3 rounded-xl"
+              >
+                <PostAddIcon />
+                <div className="absolute rounded-full bg-red-600 px-2 ml-3 mb-3">
+                  {usPosts.length}
+                </div>
+              </Link>
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="font-medium ordermenu">
+            <div
+              onClick={(event) => {
+                const menu = event.target
+                  .closest(".ordermenu")
+                  .querySelector(".orders");
+                if (!menu.classList.contains("hidden")) {
+                  menu.classList.add("hidden");
+                } else {
+                  menu.classList.remove("hidden");
+                }
+              }}
+              className="relative"
             >
-              <PostAddIcon />
-              <div className="absolute rounded-full bg-red-600 px-2 ml-3 mb-3">
-                {usPosts.length}
+              {order} <ArrowDropDownIcon />
+            </div>
+            <div className="absolute hidden bg-neutral-700 rounded-2xl orders mt-5">
+              <div
+                onClick={(event) => {
+                  setOrder("Bài viết mới nhất");
+                  let updatePosts = posts;
+                  updatePosts.sort((a, b) => new Date(b?.createdDate) - new Date(a?.createdDate));
+                  setPosts(updatePosts);
+                  event.target.closest(".orders").classList.add("hidden");
+                }}
+                className="pb-3 pt-3 hover:bg-neutral-500 px-5 rounded-2xl"
+              >
+                Bài viết mới nhất
               </div>
-            </Link>
+              <div
+                onClick={(event) => {
+                  setOrder("Bài viết cũ");
+                  let updatePosts = posts;
+                  updatePosts.sort((a, b) => new Date(a?.createdDate) - new Date(b?.createdDate));
+                  setPosts(updatePosts);
+                  event.target.closest(".orders").classList.add("hidden");
+                }}
+                className="pb-3 pt-3 hover:bg-neutral-500 px-5 rounded-2xl"
+              >
+                Bài viết cũ
+              </div>
+              <div
+                onClick={(event) => {
+                  setOrder("Giá tăng dần");
+                  let updatePosts = posts;
+                  updatePosts.sort((a, b) => a?.price - b?.price);
+                  setPosts(updatePosts);
+                  event.target.closest(".orders").classList.add("hidden");
+                }}
+                className="pb-3 pt-3 hover:bg-neutral-500 px-5 rounded-2xl"
+              >
+                Giá tăng dần 
+              </div>
+              <div
+                onClick={(event) => {
+                  setOrder("Giá giảm dần");
+                  let updatePosts = posts;
+                  updatePosts.sort((a, b) => b?.price - a?.price);
+                  setPosts(updatePosts);
+                  event.target.closest(".orders").classList.add("hidden");
+                }}
+                className="pb-3 pt-3 hover:bg-neutral-500 px-5 rounded-2xl"
+              >
+                Giá giảm dần
+              </div>
+            </div>
           </div>
-        ) : (
-          ""
-        )}
+        </div>
         {account ? (
           <div className="rounded-xl w-5/12 m-auto bg-neutral-800 p-5 mb-10">
             <div className="flex mb-3 items-center">
@@ -174,6 +246,7 @@ const TradePost = () => {
                 className="my-5 mx-5 pl-2"
                 dangerouslySetInnerHTML={{ __html: post?.content }}
               ></div>
+              <div className="my-5 mx-5 pl-2">{numberToVietnameseDong(post.price)}</div>
 
               {/* {post?.images ? (
                 <div
@@ -190,6 +263,7 @@ const TradePost = () => {
               )} */}
 
               <div className="bg-neutral-700 h-1 w-full" />
+              
               <div className="flex justify-between text-neutral-400 mx-10 py-5">
                 {/* <div
                   className={`${

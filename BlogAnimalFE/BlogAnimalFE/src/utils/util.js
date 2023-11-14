@@ -58,4 +58,20 @@ export const getAdminDashBoard = async() =>{
   return {gNob: blogs.length, gNop: posts.length, gNou: users.length, gNoc: numberOfComments}
 }
 
+export function numberToVietnameseDong(number) {
+  // Check if the input is a valid number
+  if (isNaN(number)) {
+    return "Invalid input";
+  }
+
+  // Format the number as Vietnamese Dong
+  const formattedNumber = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+    minimumFractionDigits: 0,
+  }).format(number);
+
+  return formattedNumber;
+}
+
 export default fileToBase64;
