@@ -46,6 +46,7 @@ export const getAdminDashBoard = async() =>{
   const blogs = await api.getAllBlog()
   const posts = await api.getAllPost()
   const users = await api.getAllAccounts()
+  const tradePosts = await api.getAllTradePost()
   let numberOfComments = 0;
   blogs.forEach(blog => {
     numberOfComments += blog.blogComments.length
@@ -55,7 +56,11 @@ export const getAdminDashBoard = async() =>{
     numberOfComments += post.postComments.length
   })
 
-  return {gNob: blogs.length, gNop: posts.length, gNou: users.length, gNoc: numberOfComments}
+  tradePosts.forEach(post => {
+    numberOfComments += post.tradeComments.length
+  })
+
+  return {gNob: blogs.length, gNop: posts.length, gNou: users.length, gNoc: numberOfComments, gNotp: tradePosts.length}
 }
 
 export function numberToVietnameseDong(number) {

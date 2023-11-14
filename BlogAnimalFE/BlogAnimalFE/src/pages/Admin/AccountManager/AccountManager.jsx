@@ -57,17 +57,19 @@ export const AccountManager = () => {
   const [Nop, setNop] = useState();
   const [Noc, setNoc] = useState();
   const [Nou, setNou] = useState();
+  const [Notp, setNotp] = useState();
 
   useEffect(() => {
     callback();
   }, []);
 
   const callback = async () => {
-    const { gNob, gNop, gNou, gNoc } = await getAdminDashBoard();
+    const { gNob, gNop, gNou, gNoc, gNotp } = await getAdminDashBoard();
     setNob(gNob);
     setNop(gNop);
     setNoc(gNoc);
     setNou(gNou);
+    setNotp(gNotp)
   };
 
   const handleChangePage = (event, newPage) => {
@@ -131,7 +133,7 @@ export const AccountManager = () => {
     <div className="px-20 mt-20 pb-20">
       <div className="flex mb-10 relative overflow-hidden">
         
-        <div className="w-1/4 text-2xl font-serif rounded-lg text-white bg-red-500 mr-3 relative">
+        <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-red-500 mr-3 relative">
         <img
           class="opacity-30 absolute w-full h-auto"
           src={animalbg}
@@ -139,25 +141,33 @@ export const AccountManager = () => {
         />
           <div className="px-5 pt-5 pb-10">Posts: {Nop}</div>
         </div>
-        <div className="w-1/4 text-2xl font-serif rounded-lg text-white bg-green-500 mr-3 relative">
+        <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-orange-500 mr-3 relative">
         <img
           class="opacity-30 -bottom-1 absolute w-full h-auto"
           src={animalbg}
           alt=""
         />
-           <div className="px-5 pt-5 pb-10">Blogs: {Nob}</div>
+          <div className="px-5 pt-5 pb-10">TradePosts: {Notp}</div>
         </div>
-        <div className="w-1/4 text-2xl font-serif rounded-lg text-white bg-yellow-500 mr-3 relative">
+        <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-green-500 mr-3 relative">
         <img
           class="opacity-30 absolute w-full h-auto"
           src={animalbg}
           alt=""
         />
-           <div className="px-5 pt-5 pb-10">Users: {Nou}</div>
+           <div className="px-5 pt-5 pb-10">Blogs: {Nob}</div>
         </div>
-        <div className="w-1/4 text-2xl font-serif rounded-lg text-white bg-blue-500 mr-3 relative">
+        <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-yellow-500 mr-3 relative">
         <img
           class="opacity-30 -bottom-1 absolute w-full h-auto"
+          src={animalbg}
+          alt=""
+        />
+           <div className="px-5 pt-5 pb-10">Users: {Nou}</div>
+        </div>
+        <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-blue-500 mr-3 relative">
+        <img
+          class="opacity-30 absolute w-full h-auto"
           src={animalbg}
           alt=""
         />
