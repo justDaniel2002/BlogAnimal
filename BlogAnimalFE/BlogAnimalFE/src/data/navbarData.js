@@ -27,6 +27,16 @@ export const navbarData = [
 
 export const staffNavbarData = [
     {
+        icon: BallotIcon,
+        link:"/BlogManager",
+        alt:"http://localhost:5173/BlogManager",
+        forAdmin: false
+    },
+    
+]
+
+export const adminNavbarData = [
+    {
         icon: SupervisorAccountIcon,
         link:"/AccountManager",
         alt:"http://localhost:5173/AccountManager",

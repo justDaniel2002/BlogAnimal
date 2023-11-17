@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { accountAtom } from "../atom/accountAtom";
 import Logo from "../assets/logo3.png";
-import { navbarData, staffNavbarData } from "../data/navbarData";
+import { adminNavbarData, navbarData, staffNavbarData } from "../data/navbarData";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -58,6 +58,21 @@ const Navbar = () => {
           ))}
           {account?.roleId && account?.roleId == 1 ? (
             <>
+              {adminNavbarData.map((data) => (
+                <Link onClick={() => setCurrentURL(data.alt)} to={data.link}>
+                  {data.alt == currentURL ? (
+                    <data.icon
+                      sx={{ fontSize: "50px" }}
+                      className="text-white mr-5"
+                    />
+                  ) : (
+                    <data.icon sx={{ fontSize: "50px" }} className="mr-5" />
+                  )}
+                </Link>
+              ))}
+            </>
+          ) : account?.roleId && account?.roleId == 2 ? (
+            <>
               {staffNavbarData.map((data) => (
                 <Link onClick={() => setCurrentURL(data.alt)} to={data.link}>
                   {data.alt == currentURL ? (
@@ -71,9 +86,7 @@ const Navbar = () => {
                 </Link>
               ))}
             </>
-          ) : (
-            ""
-          )}
+          ) :""}
         </div>
         <div className="flex items-center">
           {account !== undefined ? (
