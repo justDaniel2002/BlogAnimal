@@ -24,6 +24,8 @@ import { profileLoader } from "./pages/Profile/ProfileLoader";
 import { SearchPage } from "./pages/SearchPage/SearchPage";
 import { searchPageLoader } from "./pages/SearchPage/SearchPageLoader";
 import UnsecureTrade from "./pages/Trade/UnsecureTrade";
+import { PostManager } from "./pages/Admin/PostManager/PostManager";
+import { postManagerLoader } from "./pages/Admin/PostManager/PostManagerLoader";
 
 const LazyPostList = lazy(() => import("./pages/Posts/PostList"));
 const LazyUnsecurePostList = lazy(() => import("./pages/Posts/UnsecurePostList"));
@@ -82,6 +84,7 @@ function App() {
           {/* <Route index element={<PostList />}/> */}
 
           <Route path="BlogManager" element={<BlogManager />} loader={blogManagerLoader}/>
+          <Route path="PostManager" element={<PostManager />} loader={postManagerLoader}/>
           <Route path="AccountManager" element={<AccountManager />} loader={accountManagerLoader}/>
           <Route path="Profile/:accountId" element={<Profile />} loader={profileLoader}/>
           <Route path="search/:search" element={<SearchPage />} loader={searchPageLoader}/>

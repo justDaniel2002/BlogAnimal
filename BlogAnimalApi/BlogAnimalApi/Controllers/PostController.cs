@@ -1,4 +1,5 @@
-﻿using BlogAnimalApi.DTO.requestDTO;
+﻿using BlogAnimalApi.DTO;
+using BlogAnimalApi.DTO.requestDTO;
 using BlogAnimalApi.Entity;
 using BlogAnimalApi.Services;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +39,36 @@ namespace BlogAnimalApi.Controllers
                 Post post = await postService.CreatePost(cPostDTO);
                 return Ok(post);
             }catch (Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> updatePost(UpdatePostDTO postDTO)
+        {
+            try
+            {
+                Post post = await postService.UpdatePost(postDTO);
+                return Ok(post);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+
+        }
+
+        [HttpPut("uploadImg/{id}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> updateImagePost(List<IFormFile> Images, string id)
+        {
+            try
+            {
+                await postService.updateUploadImg(Request.Form.Files, id);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
             {
                 return Ok(ex.Message);
             }

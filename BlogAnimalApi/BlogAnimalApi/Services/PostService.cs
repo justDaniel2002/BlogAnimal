@@ -49,7 +49,7 @@ namespace BlogAnimalApi.Services
             return await postRepo.add(post);
         }
 
-        public async Task uploadImg(IFormFileCollection files, string postId)
+        public async Task<string> uploadImgToCloud(IFormFileCollection files)
         {
             string images = "";
             foreach (var file in files)
@@ -57,7 +57,7 @@ namespace BlogAnimalApi.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, file.OpenReadStream()),
-                    PublicId = "post_img"+Guid.NewGuid(), // Provide a unique public ID for each file
+                    PublicId = "post_img" + Guid.NewGuid(), // Provide a unique public ID for each file
                     Folder = "PostImages" // Replace "your-folder-name" with the desired folder name
                 };
 
@@ -66,16 +66,28 @@ namespace BlogAnimalApi.Services
                 if (uploadResult.StatusCode == HttpStatusCode.OK)
                 {
                     // The file was uploaded successfully
-                    images += uploadResult.SecureUri.AbsoluteUri+",";
-                    // You can store or use the publicUrl as needed
-                    await postRepo.uploadImageString(images, postId);
+                    images += uploadResult.SecureUri.AbsoluteUri + ",";
                 }
                 else
                 {
                     Console.WriteLine(uploadResult.Error);
                 }
+    
             }
-           
+            return images;
+
+        }
+
+        public async Task uploadImg(IFormFileCollection files, string postId)
+        {
+            string images = await uploadImgToCloud(files);
+            await postRepo.uploadImageString(images, postId);
+        }
+
+        public async Task updateUploadImg(IFormFileCollection files, string postId)
+        {
+            string images = await uploadImgToCloud(files);
+            await postRepo.updateImageString(images, postId);
         }
 
         public async Task uploadImgByte(List<byte[]> Images, string postId)
@@ -163,6 +175,12 @@ namespace BlogAnimalApi.Services
         public async Task secure(string postId)
         {
             await postRepo.secure(postId);
+        }
+
+        public async Task<Post> UpdatePost(UpdatePostDTO postDTO)
+        {
+            Post post = mapper.Map<Post>(postDTO);
+            return await postRepo.update(post);
         }
     }
 }

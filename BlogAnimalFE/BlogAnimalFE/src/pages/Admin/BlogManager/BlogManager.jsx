@@ -93,12 +93,12 @@ export const BlogManager = () => {
                 }}
                 className="p-2 w-20 mb-1 bg-red-500 rounded-xl text-white"
               >
-                Delete
+                Xóa
               </button>
             </div>
             <div>
               <button className="p-2 w-20 mb-1 bg-blue-500 rounded-xl text-white">
-                Detail
+                Chi tiết
               </button>
             </div>
             <div>
@@ -127,7 +127,7 @@ export const BlogManager = () => {
         }}
         className="p-2 mb-5 bg-blue-500 rounded-xl text-white"
       >
-        Create Blog
+        Tạo Blog
       </button>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>

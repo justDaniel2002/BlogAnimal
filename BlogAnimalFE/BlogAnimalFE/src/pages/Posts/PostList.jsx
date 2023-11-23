@@ -20,6 +20,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArtTrackIcon from "@mui/icons-material/ArtTrack";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { EditPostModal } from "../../components/Modals/EditPostModal";
+import EditIcon from "@mui/icons-material/Edit";
 
 const PostList = () => {
   //const posts = useLoaderData();
@@ -27,13 +29,16 @@ const PostList = () => {
   const [postForCommentModal, setPFCM] = useState();
   const [postForImageModal, setPFIM] = useState();
   const [posts, setPosts] = useState([]);
+  const [editPost, setEditpost] = useState();
   const [usPosts, setUSPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [openCM, setOpenCM] = useState(false);
   const [openPI, setOpenPI] = useState(false);
+  const [openEM, setOpenEditModal] = useState(false);
   const [order, setOrder] = useState("Bài viết mới nhất");
   const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
+  const handleOpenEditModal = () => setOpenEditModal(true);
   const handleOpenCM = (post) => {
     if (account) {
       setPFCM(post);
@@ -58,6 +63,7 @@ const PostList = () => {
     setOpen(false);
     setOpenCM(false);
     setOpenPI(false);
+    setOpenEditModal(false);
     CallBack();
   };
 
@@ -80,6 +86,21 @@ const PostList = () => {
                 <ArtTrackIcon />
                 <div className="absolute rounded-full bg-red-600 px-2 ml-3 mb-3">
                   {usPosts.length}
+                </div>
+              </Link>
+            </div>
+          ) : account?.roleId ? (
+            <div>
+              <Link
+                to={`/UnsecurePosts`}
+                className="bg-neutral-800 inline-block p-3 rounded-xl"
+              >
+                <ArtTrackIcon /> Bài Post đang chờ xét duyệt
+                <div className="absolute rounded-full bg-red-600 px-2 ml-3 mb-3">
+                  {
+                    usPosts.filter((p) => p?.accountId === account.accountId)
+                      .length
+                  }
                 </div>
               </Link>
             </div>
@@ -107,7 +128,10 @@ const PostList = () => {
                 onClick={(event) => {
                   setOrder("Bài viết mới nhất");
                   let updatePosts = posts;
-                  updatePosts.sort((a, b) => new Date(b?.createdDate) - new Date(a?.createdDate));
+                  updatePosts.sort(
+                    (a, b) =>
+                      new Date(b?.createdDate) - new Date(a?.createdDate)
+                  );
                   setPosts(updatePosts);
                   event.target.closest(".orders").classList.add("hidden");
                 }}
@@ -119,7 +143,10 @@ const PostList = () => {
                 onClick={(event) => {
                   setOrder("Bài viết cũ");
                   let updatePosts = posts;
-                  updatePosts.sort((a, b) => new Date(a?.createdDate) - new Date(b?.createdDate));
+                  updatePosts.sort(
+                    (a, b) =>
+                      new Date(a?.createdDate) - new Date(b?.createdDate)
+                  );
                   setPosts(updatePosts);
                   event.target.closest(".orders").classList.add("hidden");
                 }}
@@ -142,7 +169,7 @@ const PostList = () => {
             <input
               onClick={handleOpen}
               className="rounded-full p-2 w-full bg-neutral-600"
-              placeholder={account?.username + " what are you thinking ?"}
+              placeholder={account?.username + " bạn đang nghĩ gì ?"}
             />
           </div>
         ) : (
@@ -166,9 +193,7 @@ const PostList = () => {
                     />
                     {post?.account?.username}
                   </Link>
-                  {(account &&
-                    post?.account?.accountId === account?.accountId) ||
-                  account?.roleId === 1 ? (
+                  {account?.roleId === 1 ? (
                     <div
                       className="p-3 bg-neutral-800 menudiv"
                       onClick={(event) => {
@@ -191,14 +216,48 @@ const PostList = () => {
                         className="absolute hidden bg-neutral-800 py-3 px-5"
                       >
                         <div className="text-red-500 flex items-center">
-                          <DeleteIcon /> Delete
+                          <DeleteIcon /> Xóa
+                        </div>
+                      </div>
+                    </div>
+                  ) : post?.account?.accountId === account?.accountId ? (
+                    <div
+                      className="p-3 bg-neutral-800 menudiv"
+                      onClick={(event) => {
+                        const deleteBtn = event.target
+                          .closest(".menudiv")
+                          .querySelector("div");
+                        if (!deleteBtn.classList.contains("hidden")) {
+                          deleteBtn.classList.add("hidden");
+                        } else {
+                          deleteBtn.classList.remove("hidden");
+                        }
+                      }}
+                    >
+                      <MenuIcon />
+                      <div className="absolute hidden bg-neutral-800 py-3 px-5">
+                        <div
+                          onClick={async () => {
+                            await api.deletePost(post.postId);
+                            await CallBack();
+                          }}
+                          className="text-red-500 flex items-center"
+                        >
+                          <DeleteIcon /> Xóa
+                        </div>
+                        <div
+                          onClick={() => {
+                            setEditpost(post);
+                            handleOpenEditModal();
+                          }}
+                          className="text-blue-500 flex items-center"
+                        >
+                          <EditIcon /> Chỉnh sửa
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="p-3 bg-neutral-800 menudiv">
-                      <MenuIcon />
-                    </div>
+                    ""
                   )}
                 </div>
                 <div className="font-light text-neutral-400">
@@ -294,7 +353,7 @@ const PostList = () => {
                 <input
                   onClick={() => handleOpenCM(post)}
                   className="pl-3 p-3 w-full text-neutral-400 bg-neutral-700 rounded-2xl"
-                  placeholder="comment..."
+                  placeholder="Bình luận..."
                 />
               </div>
             </div>
@@ -333,6 +392,17 @@ const PostList = () => {
       >
         <Box sx={createPostImagemodalStyle}>
           <PostImagesModal Post={postForImageModal} />
+        </Box>
+      </Modal>
+
+      <Modal
+        open={openEM}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={createPostImagemodalStyle}>
+          <EditPostModal post={editPost} handleClose={handleClose} />
         </Box>
       </Modal>
     </>

@@ -62,12 +62,12 @@ export const SearchPage = () => {
                 show == "Post" ? "text-white" : "text-neutral-400"
             }`}
           >
-            Posts
+            Bài Post
           </div>
           <div onClick={() => setShow("Blog")} className={`bg-neutral-700 rounded-xl w-2/3 p-2 text-right font-medium ${
                 show == "Blog" ? "text-white" : "text-neutral-400"
             }`}>
-            Blogs
+            Bài Blog
           </div>
         </div>
         <div className="w-2/3">
@@ -114,7 +114,7 @@ export const SearchPage = () => {
                                 className="absolute hidden bg-neutral-800 py-3 px-5"
                               >
                                 <div className="text-red-500 flex items-center">
-                                  <DeleteIcon /> Delete
+                                  <DeleteIcon /> Xóa
                                 </div>
                               </div>
                             </div>

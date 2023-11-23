@@ -15,14 +15,15 @@ export const CheckPasswordModal = ({ handelClose, editProfile }) => {
   return (
     <>
       <div className="p-5 bg-neutral-800 text-neutral-400">
+      <label className=" mb-3 block">Mật khẩu</label>
         <input
           id="ckpass"
           className="p-2 bg-neutral-600 rounded-full w-4/5 mr-3"
-          placeholder="password"
+          placeholder="mật khẩu"
           type="password"
         />
         <button onClick={checkPassword}  className="p-2 text-white bg-blue-500 rounded-xl font-medium mt-5">
-          Submit
+          Nhập
         </button>
       </div>
     </>
@@ -54,16 +55,18 @@ export const InputPasswordModal = ({ handelClose, accountId }) => {
     <>
       <div className="p-5 bg-neutral-800 text-neutral-400">
         <Form onSubmit={submitChangePass} method="post">
+        <label className="mb-3 block">Mật khẩu cũ</label>
           <input
             className="p-2 bg-neutral-600 rounded-full w-full mb-3"
-            placeholder="old password"
+            placeholder="mật khẩu cũ"
             name="oldpassword"
             type="password"
             required
           />
+          <label className=" mb-3 block">Mật khẩu mới</label>
           <input
             className="p-2 bg-neutral-600 rounded-full w-full"
-            placeholder="new password"
+            placeholder="mật khẩu mới"
             name="newpassword"
             type="password"
             required

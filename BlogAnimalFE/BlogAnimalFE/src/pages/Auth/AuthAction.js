@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import authApi from "../../api/authApi";
 
 const AuthAction = async ({ params, request }) => {
@@ -20,7 +21,13 @@ const AuthAction = async ({ params, request }) => {
                 username: formData.get('username'),
             }
             console.log("dataSignUp",dataSignUp);
-            return await authApi.signUp(dataSignUp)
+            try{
+                await authApi.signUp(dataSignUp)
+                toast("Đăng ký thành công", {type: toast.TYPE.SUCCESS})
+            }catch(err){
+                toast("Đăng ký thất bại", {type: toast.TYPE.ERROR})
+            }
+            return 
     }
 }
 

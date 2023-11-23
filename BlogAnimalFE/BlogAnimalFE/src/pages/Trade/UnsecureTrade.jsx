@@ -21,7 +21,14 @@ const UnsecureTrade = () => {
 
   const CallBack = async () => {
     const getPosts = await api.getAllTradePost();
-    setPosts(getPosts.filter((post) => !post.isSecure));
+    account.roleId === 1
+      ? setPosts(getPosts.filter((post) => !post.isSecure))
+      : setPosts(
+          getPosts.filter(
+            (post) =>
+              !post.isSecure && post?.accountId == account.accountId
+          )
+        );
   };
 
   useEffect(() => {
@@ -77,7 +84,7 @@ const UnsecureTrade = () => {
                           }}
                           className="text-red-500 flex items-center"
                         >
-                          <DeleteIcon /> Delete
+                          <DeleteIcon /> Xóa
                         </div>
                         <div
                           onClick={async () => {
@@ -86,13 +93,36 @@ const UnsecureTrade = () => {
                           }}
                           className="text-green-500 flex items-center mt-3"
                         >
-                          <BeenhereIcon /> Secure
+                          <BeenhereIcon /> Duyệt
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="p-3 bg-neutral-800 menudiv">
+                    <div
+                      className="p-3 bg-neutral-800 menudiv"
+                      onClick={(event) => {
+                        const deleteBtn = event.target
+                          .closest(".menudiv")
+                          .querySelector("div");
+                        if (!deleteBtn.classList.contains("hidden")) {
+                          deleteBtn.classList.add("hidden");
+                        } else {
+                          deleteBtn.classList.remove("hidden");
+                        }
+                      }}
+                    >
                       <MenuIcon />
+                      <div className="absolute hidden bg-neutral-800 py-3 px-5">
+                        <div
+                          onClick={async () => {
+                            await api.deleteTrade(post.tradeId);
+                            await CallBack();
+                          }}
+                          className="text-red-500 flex items-center"
+                        >
+                          <DeleteIcon /> Xóa
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>

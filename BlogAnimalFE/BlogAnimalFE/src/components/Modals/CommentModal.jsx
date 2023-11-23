@@ -34,10 +34,10 @@ export const CommentModal = ({ handleClose, Post }) => {
               <input
                 id="comment"
                 className="p-2 rounded-full w-2/3 bg-neutral-700"
-                placeholder={`what's your thought ${account.username}`}
+                placeholder={`bạn đang nghĩ gì ${account.username}`}
               />
               <button onClick={submit} className="p-2 rounded-2xl bg-blue-600">
-                Comment
+                Bình luận
               </button>
             </div>
           </div>
@@ -102,13 +102,13 @@ export const BlogCommentModal = ({ handleClose, Blog }) => {
                 <input
                   id="comment"
                   className="p-2 rounded-full w-2/3 bg-neutral-700"
-                  placeholder={`what's your thought ${account.username}`}
+                  placeholder={`bạn đang nghĩ gì ${account.username}`}
                 />
                 <button
                   onClick={submit}
                   className="p-2 rounded-2xl bg-blue-600"
                 >
-                  Comment
+                  Bình luận
                 </button>
               </div>
             </div>
@@ -175,10 +175,10 @@ export const TradeCommentModal = ({ handleClose, Post }) => {
               <input
                 id="comment"
                 className="p-2 rounded-full w-2/3 bg-neutral-700"
-                placeholder={`what's your thought ${account.username}`}
+                placeholder={`bạn đang nghĩ gì ${account.username}`}
               />
               <button onClick={submit} className="p-2 rounded-2xl bg-blue-600">
-                Comment
+                Bình luận
               </button>
             </div>
           </div>

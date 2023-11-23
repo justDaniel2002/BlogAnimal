@@ -66,7 +66,11 @@ export const getAdminDashBoard = async() =>{
 export function numberToVietnameseDong(number) {
   // Check if the input is a valid number
   if (isNaN(number)) {
-    return "Invalid input";
+    return 0;
+  }
+
+  if(number == 0){
+    return 0
   }
 
   // Format the number as Vietnamese Dong

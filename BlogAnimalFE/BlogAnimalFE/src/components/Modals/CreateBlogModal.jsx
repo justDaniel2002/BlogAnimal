@@ -1,10 +1,13 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { accountAtom } from "../../atom/accountAtom";
 import { toast } from "react-toastify";
-import { editBlogAction, postBlogAction } from "../../pages/Blogs/PostBlogAction";
+import {
+  editBlogAction,
+  postBlogAction,
+} from "../../pages/Blogs/PostBlogAction";
 import api from "../../api/api";
 
 export const CreateBlogModal = ({ handleClose, blog }) => {
@@ -39,7 +42,7 @@ export const CreateBlogModal = ({ handleClose, blog }) => {
           content,
           accountId: account.accountId,
           blogTypeId: document.querySelector('select[name="type"]').value,
-          createdDate: blog.createdDate
+          createdDate: blog.createdDate,
         });
         console.log(result);
       } else {
@@ -59,28 +62,29 @@ export const CreateBlogModal = ({ handleClose, blog }) => {
   return (
     <>
       <div className="text-white bg-neutral-900 max-h-screen overflow-y-scroll">
-        <div className="text-center text-3xl mb-5 font-bold">Create Blog</div>
+        <div className="text-center text-3xl mb-5 font-bold">
+          {blog ? "Edit Blog" : "Tạo Blog"}
+        </div>
         <div className="text-right">
           <button
             onClick={onSubmit}
             className="p-2 px-5 mb-5 font-medium rounded-xl bg-blue-600"
           >
-            {blog ? "Edit" : "Post"}
+            {blog ? "Edit" : "Đăng"}
           </button>
         </div>
         <div className=" bg-neutral-800 h-1"></div>
 
+        <label className="mt-5 mb-3 block">Tiêu đề</label>
         <input
-          className="w-full p-3 bg-neutral-800 rounded-2xl mt-5"
-          placeholder="Title"
+          className="w-full p-3 bg-neutral-800 rounded-2xl"
+          placeholder="Tiêu đề"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
         />
 
-        <select
-          name="type"
-          className="p-3 bg-neutral-800 rounded-2xl mt-5 w-1/3"
-        >
+        <label className="mt-5 mb-3 block">Phân loại</label>
+        <select name="type" className="p-3 bg-neutral-800 rounded-2xl w-1/3">
           {blogType.map((type) => (
             <>
               {blog?.blogTypeId == type.typeId ? (
@@ -94,12 +98,13 @@ export const CreateBlogModal = ({ handleClose, blog }) => {
           ))}
         </select>
 
+        <label className="mt-5 mb-3 block">Nội dung</label>
         <ReactQuill
           theme="snow"
           modules={{ toolbar: customnToolBar }}
           value={content}
           onChange={(content) => setContent(content)}
-          className="rounded-lg mt-5 mb-3 w-full px-5 py-2 border text-black border-neutral-200 bg-neutral-100"
+          className="rounded-lg mb-3 w-full px-5 py-2 border text-black border-neutral-200 bg-neutral-100"
         />
       </div>
     </>

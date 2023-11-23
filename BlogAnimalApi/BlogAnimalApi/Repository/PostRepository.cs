@@ -12,12 +12,12 @@ namespace BlogAnimalApi.Repository
 
         public async Task<List<Post>> getAll()
         {
-            return await context.Posts.Include(p => p.PostLikes).Include(p => p.PostComments).ThenInclude(p => p.Account).OrderByDescending(b => b.CreatedDate).ToListAsync();    
+            return await context.Posts.Include(p => p.Account).Include(p => p.PostLikes).Include(p => p.PostComments).ThenInclude(p => p.Account).OrderByDescending(b => b.CreatedDate).ToListAsync();    
         }
 
         public async Task<Post> getOne(string id)
         {
-            return await context.Posts.Include(p => p.PostLikes).Include(p => p.PostComments).ThenInclude(p => p.Account).FirstOrDefaultAsync(p => p.PostId.Equals(id));
+            return await context.Posts.Include(p => p.Account).Include(p => p.PostLikes).Include(p => p.PostComments).ThenInclude(p => p.Account).FirstOrDefaultAsync(p => p.PostId.Equals(id));
         }
 
         public async Task<Post> uploadImageString(string images, string id)
@@ -26,6 +26,23 @@ namespace BlogAnimalApi.Repository
             if (post!= null)
             {
                 post.Images = images;
+                await context.SaveChangesAsync();
+            }
+            else
+            {
+                Console.WriteLine(post);
+            }
+            return post;
+        }
+
+        public async Task<Post> updateImageString(string images, string id)
+        {
+            Post post = await context.Posts.FirstOrDefaultAsync(p => p.PostId.Equals(id));
+            if (post != null)
+            {
+                if (post.Images != null) { post.Images += images; }
+                else { post.Images = images; }
+
                 await context.SaveChangesAsync();
             }
             else

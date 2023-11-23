@@ -94,6 +94,7 @@ export const Profile = () => {
                   type="email"
                   className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800"
                   placeholder="email"
+                  pattern="[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   required

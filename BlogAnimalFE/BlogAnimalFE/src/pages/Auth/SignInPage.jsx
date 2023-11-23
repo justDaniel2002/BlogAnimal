@@ -58,10 +58,10 @@ const SignInPage = () => {
                   type="submit"
                   className="font-medium w-full py-3 mb-3 text-white bg-blue-500 rounded-lg"
                 >
-                  Log In
+                  Đăng nhập
                 </button>
                 <Link to={"/ForgotPassword"} className="text-blue-500">
-                  Forgotten password ?
+                  Quân mật khẩu ?
                 </Link>
                 <hr className="my-5" />
               </Form>
@@ -69,7 +69,7 @@ const SignInPage = () => {
                 onClick={handleOpen}
                 className="font-medium w-2/3 py-3 text-white bg-lime-600"
               >
-                Create Your Account
+                Tạo tài khoản
               </button>
             </div>
           </div>

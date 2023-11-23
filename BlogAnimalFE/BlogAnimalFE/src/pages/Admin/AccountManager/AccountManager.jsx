@@ -118,11 +118,11 @@ export const AccountManager = () => {
                 </button>
               )}
             </div>
-            <div>
+            {/* <div>
               <button className="p-2 w-20 mb-1 bg-blue-500 rounded-xl text-white">
                 Info
               </button>
-            </div>
+            </div> */}
           </div>
         </>
       ),
@@ -139,7 +139,7 @@ export const AccountManager = () => {
           src={animalbg}
           alt=""
         />
-          <div className="px-5 pt-5 pb-10">Posts: {Nop}</div>
+          <div className="px-5 pt-5 pb-10">Bài Post: {Nop}</div>
         </div>
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-orange-500 mr-3 relative">
         <img
@@ -147,7 +147,7 @@ export const AccountManager = () => {
           src={animalbg}
           alt=""
         />
-          <div className="px-5 pt-5 pb-10">TradePosts: {Notp}</div>
+          <div className="px-5 pt-5 pb-10">Bài Trade: {Notp}</div>
         </div>
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-green-500 mr-3 relative">
         <img
@@ -155,7 +155,7 @@ export const AccountManager = () => {
           src={animalbg}
           alt=""
         />
-           <div className="px-5 pt-5 pb-10">Blogs: {Nob}</div>
+           <div className="px-5 pt-5 pb-10">Bài Blog: {Nob}</div>
         </div>
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-yellow-500 mr-3 relative">
         <img
@@ -163,7 +163,7 @@ export const AccountManager = () => {
           src={animalbg}
           alt=""
         />
-           <div className="px-5 pt-5 pb-10">Users: {Nou}</div>
+           <div className="px-5 pt-5 pb-10">Tài khoản: {Nou}</div>
         </div>
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-blue-500 mr-3 relative">
         <img
@@ -171,7 +171,7 @@ export const AccountManager = () => {
           src={animalbg}
           alt=""
         />
-           <div className="px-5 pt-5 pb-10">Comments: {Noc}</div>
+           <div className="px-5 pt-5 pb-10">Bình luận: {Noc}</div>
         </div>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>

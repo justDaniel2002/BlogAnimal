@@ -4,7 +4,7 @@ import { useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import fileToBase64 from "../../utils/util";
+import fileToBase64, { numberToVietnameseDong } from "../../utils/util";
 import { PhotoArrage } from "../PhotoArrage";
 import { useRecoilValue } from "recoil";
 import { accountAtom } from "../../atom/accountAtom";
@@ -17,7 +17,7 @@ export const CreatePostModal = ({ handleClose }) => {
   const [title, setTitle] = useState("");
   const [files, setFiles] = useState([]);
   const [filesBase64, setFilesBase64] = useState([]);
-  const [content, setContent] = useState("Content");
+  const [content, setContent] = useState("Nội dung");
 
   const customnToolBar = [
     [{ header: "1" }, { header: "2" }, "bold", "italic", "underline"],
@@ -55,6 +55,7 @@ export const CreatePostModal = ({ handleClose }) => {
     accept: {
       "image/png": [".png"],
       "image/jpg": [".jpg"],
+      "image/jfif": [".jfif"],
     },
   });
 
@@ -71,56 +72,59 @@ export const CreatePostModal = ({ handleClose }) => {
   return (
     <>
       <div className="text-white bg-neutral-900 max-h-screen overflow-y-scroll">
-        <div className="text-center text-3xl mb-5 font-bold">Create Post</div>
+        <div className="text-center text-3xl mb-5 font-bold">Tạo Post</div>
         <div className="text-right">
           <button
             onClick={onSubmit}
             className="p-2 px-5 mb-5 font-medium rounded-xl bg-blue-600"
           >
-            Post
+            Đăng bài
           </button>
         </div>
         <div className=" bg-neutral-800 h-1"></div>
+        <label className="mt-5 mb-3 block">Tiêu đề</label>
         <input
-          className="w-full p-3 bg-neutral-800 rounded-2xl mt-5"
-          placeholder="Title"
+          className="w-full p-3 bg-neutral-800 rounded-2xl"
+          placeholder="Tiêu đề"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
         />
+        <label className="mt-5 mb-3 block">Nội dung</label>
         <ReactQuill
           theme="snow"
           modules={{ toolbar: customnToolBar }}
           value={content}
           onChange={(content) => setContent(content)}
-          className="rounded-lg mt-5 mb-3 w-full px-5 py-2 border text-black border-neutral-200 bg-neutral-100"
+          className="rounded-lg mb-3 w-full px-5 py-2 border text-black border-neutral-200 bg-neutral-100"
         />
+        <label className="mt-5 mb-3 block">Hình ảnh</label>
         <div
           className="rounded-lg px-5 py-2 border-2 text-neutral-400 border-dashed border-neutral-300 bg-neutral-100"
           {...getRootProps()}
         >
           <input {...getInputProps()} />
           {isDragActive ? (
-            <div className="h-60">Drop the files here ...</div>
+            <div className="h-60">Thả ảnh ở đây ...</div>
           ) : files?.length === 0 ? (
             <p>
-              Drag / drop some files here, or click to select files for Artifact
-              Image
+              Kéo/thả một số file vào đây, hoặc click chọn file cho
+              Hình ảnh
             </p>
           ) : (
             <>
-              <h3>Selected Files:</h3>
+              <h3>Tệp đã chọn:</h3>
               <ul>
                 {files?.map((file, index) => (
                   <>
                     <li key={index}>
-                      <span className="m-1">{file.name}</span>
+                      <span className="m-1">{file?.name}</span>
                       <Button
                         variant="outlined"
                         color="error"
                         startIcon={<DeleteIcon />}
                         onClick={() => removeFile(index)}
                       >
-                        Remove
+                        Gỡ
                       </Button>
                     </li>
                   </>
@@ -137,7 +141,7 @@ export const CreatePostModal = ({ handleClose }) => {
 
 export const CreateTradeModal = ({ handleClose }) => {
   const account = useRecoilValue(accountAtom);
-  const [content, setContent] = useState("Content");
+  const [content, setContent] = useState("Nội dung");
   const [price, setPrice] = useState(0);
 
   const customnToolBar = [
@@ -165,30 +169,32 @@ export const CreateTradeModal = ({ handleClose }) => {
     <>
       <div className="text-white bg-neutral-900 max-h-screen overflow-y-scroll">
         <div className="text-center text-3xl mb-5 font-bold">
-          Create Trade Post
+          Tạo bài Trade
         </div>
         <div className="text-right">
           <button
             onClick={onSubmit}
             className="p-2 px-5 mb-5 font-medium rounded-xl bg-blue-600"
           >
-            Post
+            Đăng bài
           </button>
         </div>
         <div className=" bg-neutral-800 h-1"></div>
+        <label className="mt-5 mb-3 block">Giá</label>
         <input
-          type="number"
-          className="w-1/3 p-3 bg-neutral-800 rounded-2xl mt-5"
+          className="w-1/3 p-3 bg-neutral-800 rounded-2xl"
           placeholder="Price"
           value={price}
+          onBlur={(event) => setPrice(numberToVietnameseDong(event.target.value))}
           onChange={(event) => setPrice(event.target.value)}
         />
+        <label className="mt-5 mb-3 block">Nội dung</label>
         <ReactQuill
           theme="snow"
           modules={{ toolbar: customnToolBar }}
           value={content}
           onChange={(content) => setContent(content)}
-          className="rounded-lg mt-5 mb-3 w-full px-5 py-2 border text-black border-neutral-200 bg-neutral-100"
+          className="rounded-lg mb-3 w-full px-5 py-2 border text-black border-neutral-200 bg-neutral-100"
         />
       </div>
     </>

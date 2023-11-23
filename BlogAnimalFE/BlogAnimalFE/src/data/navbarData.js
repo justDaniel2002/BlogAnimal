@@ -3,6 +3,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import BallotIcon from "@mui/icons-material/Ballot";
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 export const navbarData = [
     {
@@ -48,5 +49,11 @@ export const adminNavbarData = [
         alt:"http://localhost:5173/BlogManager",
         forAdmin: false
     },
+    {
+        icon:AddPhotoAlternateIcon,
+        link:"/PostManager",
+        alt:"http://localhost:5173/PostManager",
+        forAdmin: false
+    }
     
 ]

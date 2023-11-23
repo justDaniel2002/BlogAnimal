@@ -121,7 +121,7 @@ const Navbar = () => {
                   }}
                   className="text-center pb-3"
                 >
-                  Logout
+                  Đăng xuất
                 </div>
                 <div className="bg-neutral-500 h-0.5 my-3 w-full"></div>
                 <Link

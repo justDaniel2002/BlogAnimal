@@ -89,6 +89,18 @@ const TradePost = () => {
                 </div>
               </Link>
             </div>
+          ) :account?.roleId === 3 ? (
+            <div>
+              <Link
+                to={`/UnsecureTrades`}
+                className="bg-neutral-800 inline-block p-3 rounded-xl"
+              >
+                <ArtTrackIcon /> Bài Trade đang chờ xét duyệt
+                <div className="absolute rounded-full bg-red-600 px-2 ml-3 mb-3">
+                  {usPosts.filter(p => p?.accountId === account.accountId).length}
+                </div>
+              </Link>
+            </div>
           ) : (
             ""
           )}
@@ -218,7 +230,7 @@ const TradePost = () => {
                           }}
                           className="text-red-500 flex items-center"
                         >
-                          <DeleteIcon /> Delete
+                          <DeleteIcon /> Xóa
                         </div>
                         <div
                           onClick={async () => {
@@ -227,14 +239,12 @@ const TradePost = () => {
                           }}
                           className="text-blue-500 flex items-center mt-3"
                         >
-                          <CurrencyExchangeIcon /> Transacted
+                          <CurrencyExchangeIcon /> Giao dịch xong
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="p-3 bg-neutral-800 menudiv">
-                      <MenuIcon />
-                    </div>
+                    ""
                   )}
                 </div>
                 <div className="font-light text-neutral-400">
