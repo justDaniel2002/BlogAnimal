@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../../api/api";
 import { Link, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { backgroundState } from "../../atom/accountAtom";
 
 const BlogList = () => {
+  const bg = useRecoilValue(backgroundState)
   const [blogs, setBlogs] = useState([]);
   const { typeid } = useParams();
   useEffect(() => {
@@ -18,7 +21,7 @@ const BlogList = () => {
         {blogs.map((blog) => (
           <Link
             to={`/Blog/${blog.blogId}`}
-            className="w-1/3 h-60 rounded-2xl bg-neutral-700 mr-10 px-5 py-5 text-white"
+            className={`w-1/3 h-60 rounded-2xl ${bg=="dark"?"bg-neutral-700 text-white":"bg-white text-black border"} mr-10 px-5 py-5`}
           >
             <div className="text-2xl my-5  font-serif font-medium">
               {blog.title}

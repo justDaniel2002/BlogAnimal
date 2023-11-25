@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import api from "../../../api/api";
 import { BlogCommentModal } from "../../../components/Modals/CommentModal";
+import { useRecoilValue } from "recoil";
+import { backgroundState } from "../../../atom/accountAtom";
 
 const BlogDetail = () => {
+    const bg = useRecoilValue(backgroundState)
     const [Blog, setBlog] = useState()
     const { id } = useParams();
     const CallBack = async() => {
@@ -18,7 +21,7 @@ const BlogDetail = () => {
 
 
     return <>
-    <div className="mt-20 px-20 mx-20 py-10 rounded-xl text-white bg-neutral-700">
+    <div className={`mt-20 px-20 mx-20 py-10 rounded-xl ${bg=="dark"?"text-white bg-neutral-700":"text-black bg-white"}`}>
         {console.log("blog", Blog)}
         <div className="text-center text-3xl mb-10">{Blog?.title}</div>
         <div className="text-xl font-light" dangerouslySetInnerHTML={{ __html: Blog?.content }}></div>

@@ -83,4 +83,15 @@ export function numberToVietnameseDong(number) {
   return formattedNumber;
 }
 
+export function scrollToElement(id) {
+  var element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth'
+    });
+  } else {
+    console.error("Element with ID '" + id + "' not found.");
+  }
+}
+
 export default fileToBase64;

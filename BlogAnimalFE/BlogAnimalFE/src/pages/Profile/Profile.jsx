@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { accountAtom } from "../../atom/accountAtom";
+import { accountAtom, backgroundState } from "../../atom/accountAtom";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { createPostmodalStyle } from "../../style/style";
 
 export const Profile = () => {
+  const bg = useRecoilValue(backgroundState)
   const [account, setAccount] = useRecoilState(accountAtom);
   const profileLoader = useLoaderData();
   const [profile, setProfile] = useState(profileLoader);
@@ -65,8 +66,8 @@ export const Profile = () => {
 
   return (
     <>
-      <div className="px-96">
-        <div className="bg-neutral-700 p-10 rounded-xl text-white">
+      <div className="px-96 mt-10">
+        <div className={`${bg=="dark"?"bg-neutral-700 text-white":"bg-white text-black border"} p-10 rounded-xl`}>
           <div className="flex items-center mb-10 justify-between">
             <div className="flex items-center">
               <img
@@ -77,7 +78,7 @@ export const Profile = () => {
             </div>
             {account?.accountId === profile.accountId ? (
               <button
-                className="p-2 bg-blue-600 rounded-xl font-medium"
+                className="p-2 bg-blue-600 rounded-xl font-medium text-white"
                 onClick={handleOpenEP}
               >
                 Thay đổi mật khẩu
@@ -92,7 +93,7 @@ export const Profile = () => {
                 <label className="mb-3 block">Email</label>
                 <input
                   type="email"
-                  className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800"
+                  className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800 border-2"
                   placeholder="email"
                   pattern="[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                   value={email}
@@ -101,7 +102,7 @@ export const Profile = () => {
                 />
                 <label className="mb-3 block">User Name</label>
                 <input
-                  className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800"
+                  className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800 border-2"
                   placeholder="username"
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
@@ -112,21 +113,21 @@ export const Profile = () => {
                   type="tel"
                   pattern="[0-9]+"
                   maxLength={10}
-                  className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800"
+                  className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800 border-2"
                   placeholder="contact"
                   value={contact}
                   onChange={(event) => setContact(event.target.value)}
                 />
                 <label className="mb-3 block">Facebook</label>
                 <input
-                  className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800"
+                  className="p-2 rounded-full block w-2/3 mb-5 text-neutral-800 border-2"
                   placeholder="facebook"
                   value={facebook}
                   onChange={(event) => setFacebook(event.target.value)}
                 />
 
                 <button
-                  className="p-2 px-5 bg-blue-500 rounded-xl mt-5"
+                  className="p-2 px-5 bg-blue-500 rounded-xl mt-5 text-white"
                   onClick={handleOpenCP}
                 >
                   Edit

@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { CreateBlogModal } from "../../../components/Modals/CreateBlogModal";
 import { useState } from "react";
 import { Box, Modal } from "@mui/material";
@@ -16,6 +16,8 @@ import {
   createPostmodalStyle,
 } from "../../../style/style";
 import api from "../../../api/api";
+import { useRecoilValue } from "recoil";
+import { backgroundState } from "../../../atom/accountAtom";
 
 const columns = [
   { id: "postId", label: "Post #", minWidth: 170 },
@@ -46,6 +48,7 @@ const columns = [
 // }
 
 export const PostManager = () => {
+  const bg = useRecoilValue(backgroundState);
   const loaderPosts = useLoaderData();
   const [Posts, setPosts] = useState(loaderPosts);
   const [ModalBlog, setModalBlog] = useState();
@@ -90,24 +93,38 @@ export const PostManager = () => {
               </button>
             </div>
             {post.isSecure ? (
-              <div>
-                <button className="p-2 w-20 mb-1 bg-green-500 rounded-xl text-white">
-                  Đã duyệt
-                </button>
-              </div>
+              <>
+                <div>
+                  <button className="p-2 w-20 mb-1 bg-green-500 rounded-xl text-white">
+                    Đã duyệt
+                  </button>
+                </div>
+                <Link to={`/${post.postId}`}>
+                  <button className="p-2 w-20 mb-1 bg-blue-500 rounded-xl text-white">
+                    Chi tiết
+                  </button>
+                </Link>
+              </>
             ) : (
-              <div>
-                <button
-                  onClick={async () => {
-                    await api.securePost(post.postId);
-                    const posts = await api.getAllPost();
-                    setPosts(posts);
-                  }}
-                  className="p-2 w-20 mb-1 bg-blue-500 rounded-xl text-white"
-                >
-                  Duyệt
-                </button>
-              </div>
+              <>
+                <div>
+                  <button
+                    onClick={async () => {
+                      await api.securePost(post.postId);
+                      const posts = await api.getAllPost();
+                      setPosts(posts);
+                    }}
+                    className="p-2 w-20 mb-1 bg-blue-500 rounded-xl text-white"
+                  >
+                    Duyệt
+                  </button>
+                </div>
+                <Link to={`/UnsecurePosts/${post.postId}`}>
+                  <button className="p-2 w-20 mb-1 bg-blue-500 rounded-xl text-white">
+                    Chi tiết
+                  </button>
+                </Link>
+              </>
             )}
           </div>
         </>
@@ -137,8 +154,8 @@ export const PostManager = () => {
                     align={column.align}
                     style={{
                       minWidth: column.minWidth,
-                      backgroundColor: "#303030",
-                      color: "white",
+                      backgroundColor: bg == "dark" ? "#303030" : "#ffffff",
+                      color: bg == "dark" ? "white" : "black",
                     }}
                   >
                     {column.label}
@@ -166,8 +183,9 @@ export const PostManager = () => {
                             return (
                               <TableCell
                                 style={{
-                                  backgroundColor: "#303030",
-                                  color: "white",
+                                  backgroundColor:
+                                    bg == "dark" ? "#303030" : "#ffffff",
+                                  color: bg == "dark" ? "white" : "black",
                                 }}
                                 key={column.id}
                                 align={column.align}
@@ -189,8 +207,8 @@ export const PostManager = () => {
           sx={{
             width: "100%",
             overflow: "hidden",
-            backgroundColor: "#303030",
-            color: "white",
+            backgroundColor: bg == "dark" ? "#303030" : "#ffffff",
+            color: bg == "dark" ? "white" : "black",
           }}
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

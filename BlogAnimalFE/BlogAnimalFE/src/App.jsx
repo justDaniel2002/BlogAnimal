@@ -56,9 +56,25 @@ function App() {
                 <LazyPostList />
               </Suspense>
             }
-          />TradePost
+          />
+           <Route
+            path=":id"
+            element={
+              <Suspense fallback={<h1 className="text-white">Loading...</h1>}>
+                <LazyPostList />
+              </Suspense>
+            }
+          />
           <Route
             path="UnsecurePosts"
+            element={
+              <Suspense fallback={<h1 className="text-white">Loading...</h1>}>
+                <LazyUnsecurePostList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="UnsecurePosts/:id"
             element={
               <Suspense fallback={<h1 className="text-white">Loading...</h1>}>
                 <LazyUnsecurePostList />

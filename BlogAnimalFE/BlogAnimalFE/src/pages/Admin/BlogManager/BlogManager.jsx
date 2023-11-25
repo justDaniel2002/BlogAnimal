@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { CreateBlogModal } from "../../../components/Modals/CreateBlogModal";
 import { useState } from "react";
 import { Box, Modal } from "@mui/material";
@@ -16,6 +16,8 @@ import {
   createPostmodalStyle,
 } from "../../../style/style";
 import api from "../../../api/api";
+import { useRecoilValue } from "recoil";
+import { backgroundState } from "../../../atom/accountAtom";
 
 const columns = [
   { id: "blogId", label: "BlogID", minWidth: 170 },
@@ -52,6 +54,7 @@ const columns = [
 // }
 
 export const BlogManager = () => {
+  const bg = useRecoilValue(backgroundState)
   const loaderBlogs = useLoaderData();
   const [Blogs, setBlogs] = useState(loaderBlogs);
   const [ModalBlog, setModalBlog] = useState();
@@ -96,11 +99,11 @@ export const BlogManager = () => {
                 Xóa
               </button>
             </div>
-            <div>
+            <Link to={`/Blog/${blog.blogId}`}>
               <button className="p-2 w-20 mb-1 bg-blue-500 rounded-xl text-white">
                 Chi tiết
               </button>
-            </div>
+            </Link>
             <div>
               <button
                 onClick={() => {
@@ -140,8 +143,8 @@ export const BlogManager = () => {
                     align={column.align}
                     style={{
                       minWidth: column.minWidth,
-                      backgroundColor: "#303030",
-                      color: "white",
+                      backgroundColor: bg=="dark"?"#303030":"#ffffff",
+                      color:  bg=="dark"?"white":"black",
                     }}
                   >
                     {column.label}
@@ -169,8 +172,8 @@ export const BlogManager = () => {
                             return (
                               <TableCell
                                 style={{
-                                  backgroundColor: "#303030",
-                                  color: "white",
+                                  backgroundColor: bg=="dark"?"#303030":"#ffffff",
+                      color:  bg=="dark"?"white":"black",
                                 }}
                                 key={column.id}
                                 align={column.align}
@@ -192,8 +195,8 @@ export const BlogManager = () => {
           sx={{
             width: "100%",
             overflow: "hidden",
-            backgroundColor: "#303030",
-            color: "white",
+            backgroundColor: bg=="dark"?"#303030":"#ffffff",
+                      color:  bg=="dark"?"white":"black",
           }}
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

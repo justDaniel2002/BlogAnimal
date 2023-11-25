@@ -12,7 +12,9 @@ import api from "../../../api/api";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getAdminDashBoard } from "../../../utils/util";
-import animalbg from "../../../assets/animalBg.png"
+import animalbg from "../../../assets/animalBg.png";
+import { useRecoilValue } from "recoil";
+import { backgroundState } from "../../../atom/accountAtom";
 
 const columns = [
   { id: "accountId", label: "Account ID", minWidth: 170 },
@@ -49,6 +51,7 @@ const columns = [
 // }
 
 export const AccountManager = () => {
+  const bg = useRecoilValue(backgroundState);
   const loaderAccounts = useLoaderData();
   const [Accounts, setAccounts] = useState(loaderAccounts);
   const [page, setPage] = useState(0);
@@ -69,7 +72,7 @@ export const AccountManager = () => {
     setNop(gNop);
     setNoc(gNoc);
     setNou(gNou);
-    setNotp(gNotp)
+    setNotp(gNotp);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -132,46 +135,45 @@ export const AccountManager = () => {
   return (
     <div className="px-20 mt-20 pb-20">
       <div className="flex mb-10 relative overflow-hidden">
-        
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-red-500 mr-3 relative">
-        <img
-          class="opacity-30 absolute w-full h-auto"
-          src={animalbg}
-          alt=""
-        />
+          <img
+            class="opacity-30 absolute w-full h-auto"
+            src={animalbg}
+            alt=""
+          />
           <div className="px-5 pt-5 pb-10">Bài Post: {Nop}</div>
         </div>
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-orange-500 mr-3 relative">
-        <img
-          class="opacity-30 -bottom-1 absolute w-full h-auto"
-          src={animalbg}
-          alt=""
-        />
+          <img
+            class="opacity-30 -bottom-1 absolute w-full h-auto"
+            src={animalbg}
+            alt=""
+          />
           <div className="px-5 pt-5 pb-10">Bài Trade: {Notp}</div>
         </div>
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-green-500 mr-3 relative">
-        <img
-          class="opacity-30 absolute w-full h-auto"
-          src={animalbg}
-          alt=""
-        />
-           <div className="px-5 pt-5 pb-10">Bài Blog: {Nob}</div>
+          <img
+            class="opacity-30 absolute w-full h-auto"
+            src={animalbg}
+            alt=""
+          />
+          <div className="px-5 pt-5 pb-10">Bài Blog: {Nob}</div>
         </div>
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-yellow-500 mr-3 relative">
-        <img
-          class="opacity-30 -bottom-1 absolute w-full h-auto"
-          src={animalbg}
-          alt=""
-        />
-           <div className="px-5 pt-5 pb-10">Tài khoản: {Nou}</div>
+          <img
+            class="opacity-30 -bottom-1 absolute w-full h-auto"
+            src={animalbg}
+            alt=""
+          />
+          <div className="px-5 pt-5 pb-10">Tài khoản: {Nou}</div>
         </div>
         <div className="w-1/5 text-2xl font-serif rounded-lg text-white bg-blue-500 mr-3 relative">
-        <img
-          class="opacity-30 absolute w-full h-auto"
-          src={animalbg}
-          alt=""
-        />
-           <div className="px-5 pt-5 pb-10">Bình luận: {Noc}</div>
+          <img
+            class="opacity-30 absolute w-full h-auto"
+            src={animalbg}
+            alt=""
+          />
+          <div className="px-5 pt-5 pb-10">Bình luận: {Noc}</div>
         </div>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -185,8 +187,8 @@ export const AccountManager = () => {
                     align={column.align}
                     style={{
                       minWidth: column.minWidth,
-                      backgroundColor: "#303030",
-                      color: "white",
+                      backgroundColor: bg == "dark" ? "#303030" : "#ffffff",
+                      color: bg == "dark" ? "white" : "black",
                     }}
                   >
                     {column.label}
@@ -214,8 +216,9 @@ export const AccountManager = () => {
                             return (
                               <TableCell
                                 style={{
-                                  backgroundColor: "#303030",
-                                  color: "white",
+                                  backgroundColor:
+                                    bg == "dark" ? "#303030" : "#ffffff",
+                                  color: bg == "dark" ? "white" : "black",
                                 }}
                                 key={column.id}
                                 align={column.align}
@@ -237,8 +240,8 @@ export const AccountManager = () => {
           sx={{
             width: "100%",
             overflow: "hidden",
-            backgroundColor: "#303030",
-            color: "white",
+            backgroundColor: bg == "dark" ? "#303030" : "#ffffff",
+            color: bg == "dark" ? "white" : "black",
           }}
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

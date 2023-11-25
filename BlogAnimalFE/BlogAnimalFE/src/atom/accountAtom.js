@@ -5,3 +5,8 @@ export const accountAtom = atom({
     key: "account",
     default: sessionExtension.getTItem("account")
 })
+
+export const backgroundState = atom({
+    key:"background",
+    default: localStorage.getItem("background")??"dark"
+})
