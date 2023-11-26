@@ -350,9 +350,7 @@ const PostList = () => {
                   <ChatBubbleOutlineIcon />
                   Bình luận
                 </div>
-                <div>
-                  <SendIcon /> Chia sẻ
-                </div>
+                
               </div>
               <hr />
               {post?.postComments[0] ? (
