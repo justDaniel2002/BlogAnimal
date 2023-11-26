@@ -144,6 +144,7 @@ const UnsecureTrade = () => {
                   {post?.createdDate}
                 </div>
               </div>
+              <div className="my-5 mx-5 pl-2 font-medium">{post?.title}</div>
               <div
                 className="my-5 mx-5 pl-2"
                 dangerouslySetInnerHTML={{ __html: post?.content }}

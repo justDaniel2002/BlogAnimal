@@ -45,7 +45,7 @@ namespace BlogAnimalApi.Services
             return await accountRepo.editPassword(accountId, oldpasswod, newpassword);
         }
 
-        public async Task createTrade(TradeDTO tradeDTO)
+        public async Task createTrade(CreateTradeDTO tradeDTO)
         {
             TradePost tc = mapper.Map<TradePost>(tradeDTO);
             await tradeRepo.add(tc);

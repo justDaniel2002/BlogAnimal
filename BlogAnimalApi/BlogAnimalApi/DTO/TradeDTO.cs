@@ -11,6 +11,7 @@ namespace BlogAnimalApi.DTO
         public DateTime? CreatedDate { get; set; }
         public string? AccountId { get; set; }
         public decimal? Price { get; set; }
+        public string? Title { get; set; }
 
         public virtual AccountDTO? Account { get; set; }
         public virtual ICollection<TradeCommentDTO>? TradeComments { get; set; }

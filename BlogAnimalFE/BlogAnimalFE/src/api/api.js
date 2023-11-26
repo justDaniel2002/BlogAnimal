@@ -120,6 +120,7 @@ const uploadTradeComment = async (data) => {
 };
 
 const uploadTrade = async (data) => {
+  console.log(data)
   const res = await axios
     .post(
       `https://localhost:7252/api/Trade`,data

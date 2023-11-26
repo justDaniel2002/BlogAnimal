@@ -4,7 +4,7 @@ import { useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import fileToBase64, { numberToVietnameseDong } from "../../utils/util";
+import fileToBase64, { convertDongToNumber, numberToVietnameseDong } from "../../utils/util";
 import { PhotoArrage } from "../PhotoArrage";
 import { useRecoilValue } from "recoil";
 import { accountAtom } from "../../atom/accountAtom";
@@ -143,6 +143,7 @@ export const CreateTradeModal = ({ handleClose }) => {
   const account = useRecoilValue(accountAtom);
   const [content, setContent] = useState("Nội dung");
   const [price, setPrice] = useState(0);
+  const [title, setTitle] = useState("");
 
   const customnToolBar = [
     [{ header: "1" }, { header: "2" }, "bold", "italic", "underline"],
@@ -157,8 +158,9 @@ export const CreateTradeModal = ({ handleClose }) => {
     } else {
       const result = await api.uploadTrade({
         content,
-        price,
+        price: convertDongToNumber(price),
         accountId: account.accountId,
+        title,
       });
       console.log(result);
       handleClose();
@@ -180,6 +182,13 @@ export const CreateTradeModal = ({ handleClose }) => {
           </button>
         </div>
         <div className=" bg-neutral-800 h-1"></div>
+        <label className="mt-5 mb-3 block">Tiêu đề</label>
+        <input
+          className="w-full p-3 bg-neutral-800 rounded-2xl"
+          placeholder="Tiêu đề"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
         <label className="mt-5 mb-3 block">Giá</label>
         <input
           className="w-1/3 p-3 bg-neutral-800 rounded-2xl"

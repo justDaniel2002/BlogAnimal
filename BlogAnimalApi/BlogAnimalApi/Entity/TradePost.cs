@@ -17,6 +17,7 @@ namespace BlogAnimalApi.Entity
         public DateTime? CreatedDate { get; set; }
         public string? AccountId { get; set; }
         public decimal? Price { get; set; }
+        public string? Title { get; set; }
 
         public virtual Account? Account { get; set; }
         public virtual ICollection<TradeComment> TradeComments { get; set; }

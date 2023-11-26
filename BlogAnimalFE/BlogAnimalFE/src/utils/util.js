@@ -94,4 +94,14 @@ export function scrollToElement(id) {
   }
 }
 
+export function convertDongToNumber(input) {
+  // Remove the non-numeric characters from the input string
+  const numericString = input.replace(/[^0-9]/g, '');
+
+  // Parse the cleaned string as an integer
+  const numberValue = parseInt(numericString, 10);
+
+  return numberValue;
+}
+
 export default fileToBase64;

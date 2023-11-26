@@ -440,6 +440,10 @@ namespace BlogAnimalApi.Entity
                     .HasColumnType("money")
                     .HasColumnName("price");
 
+                entity.Property(e => e.Title)
+                    .HasMaxLength(225)
+                    .HasColumnName("title");
+
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.TradePosts)
                     .HasForeignKey(d => d.AccountId)

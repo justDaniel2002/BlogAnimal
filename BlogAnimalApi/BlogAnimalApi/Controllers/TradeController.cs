@@ -1,4 +1,5 @@
 ﻿using BlogAnimalApi.DTO;
+using BlogAnimalApi.DTO.requestDTO;
 using BlogAnimalApi.Helper;
 using BlogAnimalApi.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +45,7 @@ namespace BlogAnimalApi.Controllers
 
         // POST api/<TradeController>
         [HttpPost()]
-        public async Task<IActionResult> createTrade(TradeDTO tradeDTO)
+        public async Task<IActionResult> createTrade(CreateTradeDTO tradeDTO)
         {
             try
             {
