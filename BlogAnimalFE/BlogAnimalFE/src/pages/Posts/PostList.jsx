@@ -82,8 +82,7 @@ const PostList = () => {
   const likePost = async (postId) => {
     const result = await api.likePost(postId, account.accountId);
     console.log(result);
-    const getPosts = await api.getAllPost();
-    setPosts(getPosts);
+    CallBack()
   };
   return (
     <>
