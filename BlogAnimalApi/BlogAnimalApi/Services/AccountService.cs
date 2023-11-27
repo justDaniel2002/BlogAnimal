@@ -36,6 +36,7 @@ namespace BlogAnimalApi.Services
         public async Task SignUp(SignUpDTO accountDTO)
         {
             Account account = mapper.Map<Account>(accountDTO);
+            account.RoleId = 3;
             await accountRepo.add(account);
         }
 
