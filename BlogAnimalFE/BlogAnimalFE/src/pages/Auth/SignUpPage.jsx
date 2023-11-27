@@ -1,6 +1,7 @@
 import { Form } from "react-router-dom";
 
 const SignUpModal = () => {
+  
   return (
     <>
       <div className="p-5">
@@ -20,7 +21,6 @@ const SignUpModal = () => {
             name="email"
             required
             type="email"
-            pattern="[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
             className="p-2 mb-3 w-full bg-sky-50"
             placeholder="email"
           />

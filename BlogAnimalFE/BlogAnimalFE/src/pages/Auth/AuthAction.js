@@ -27,7 +27,7 @@ const AuthAction = async ({ params, request }) => {
             }catch(err){
                 toast("Đăng ký thất bại", {type: toast.TYPE.ERROR})
             }
-            return 
+            return ""
     }
 }
 
