@@ -11,14 +11,19 @@ import MenuIcon from "@mui/icons-material/Menu";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
 import { numberToVietnameseDong } from "../../utils/util";
+import { EditPostModal, EditTradeModal } from "../../components/Modals/EditPostModal";
+import EditIcon from '@mui/icons-material/Edit';
 
 const UnsecureTrade = () => {
   //const posts = useLoaderData();
   const bg = useRecoilValue(backgroundState);
   const account = useRecoilValue(accountAtom);
   const [posts, setPosts] = useState([]);
+  const [editPost, setEditpost] = useState();
   const [openPI, setOpenPI] = useState(false);
+  const [openEM, setOpenEditModal] = useState(false);
   const handleOpenPI = () => setOpenPI(true);
+  const handleOpenEditModal = () => setOpenEditModal(true);
 
   const CallBack = async () => {
     const getPosts = await api.getAllTradePost();
@@ -37,8 +42,8 @@ const UnsecureTrade = () => {
 
   const handleClose = async () => {
     setOpenPI(false);
-    const getPosts = await api.getAllPost();
-    setPosts(getPosts);
+    setOpenEditModal(false)
+    await CallBack()
   };
 
   return (
@@ -136,6 +141,15 @@ const UnsecureTrade = () => {
                         >
                           <DeleteIcon /> Xóa
                         </div>
+                        <div
+                          onClick={() => {
+                            setEditpost(post)
+                            handleOpenEditModal()
+                          }}
+                          className="text-blue-500 flex items-center"
+                        >
+                          <EditIcon /> Chỉnh sửa
+                        </div>
                       </div>
                     </div>
                   )}
@@ -156,6 +170,17 @@ const UnsecureTrade = () => {
           </>
         ))}
       </div>
+
+      <Modal
+        open={openEM}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={createPostImagemodalStyle}>
+          <EditTradeModal post={editPost} handleClose={handleClose} />
+        </Box>
+      </Modal>
     </>
   );
 };

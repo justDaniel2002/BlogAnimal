@@ -1,5 +1,6 @@
 ﻿using BlogAnimalApi.DTO;
 using BlogAnimalApi.DTO.requestDTO;
+using BlogAnimalApi.Entity;
 using BlogAnimalApi.Helper;
 using BlogAnimalApi.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -71,6 +72,21 @@ namespace BlogAnimalApi.Controllers
             {
                 return Ok(ex.Message);
             }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> updateTrade(UpdateTradeDTO tradeDTO)
+        {
+            try
+            {
+                TradePost trade = await tradeService.UpdateTrade(tradeDTO);
+                return Ok(trade);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+
         }
 
         // DELETE api/<TradeController>/5

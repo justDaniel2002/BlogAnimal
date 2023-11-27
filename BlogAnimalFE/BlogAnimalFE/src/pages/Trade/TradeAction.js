@@ -9,3 +9,9 @@ export const tradeAction = async (data) => {
     
     return result
 }
+
+export const updateTradeAction = async (data) => {
+    const result = await api.updateTrade(data)
+    
+    return result
+}

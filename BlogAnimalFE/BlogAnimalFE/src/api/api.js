@@ -73,6 +73,14 @@ const updatePost = async (data) => {
   return res.data;
 };
 
+const updateTrade = async (data) => {
+  const res = await axios
+    .put(`https://localhost:7252/api/Trade`, data)
+    .catch((err) => console.log(err));
+  console.log(res);
+  return res.data;
+};
+
 const uploadPostImage = async (Images, id) => {
   const formData = new FormData();
 
@@ -299,6 +307,7 @@ const api = {
   uploadTrade,
   updatePost,
   updatePostImage,
+  updateTrade,
 
   editBlog,
   editPassword,

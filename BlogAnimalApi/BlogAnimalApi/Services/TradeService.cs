@@ -55,5 +55,11 @@ namespace BlogAnimalApi.Services
         {
             await tradeRepo.secureTrade(id);
         }
+
+        public async Task<TradePost> UpdateTrade(UpdateTradeDTO tradeDTO)
+        {
+            TradePost trade = mapper.Map<TradePost>(tradeDTO);
+            return await tradeRepo.update(trade);
+        }
     }
 }
